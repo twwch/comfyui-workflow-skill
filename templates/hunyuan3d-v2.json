@@ -1,8 +1,8 @@
 {
-  "id": "1ae853c7-5228-450d-bd4e-866082cfc509",
+  "id": "6777dcf8-8143-4491-a6f5-071ec1ee3795",
   "revision": 0,
-  "last_node_id": 9,
-  "last_link_id": 10,
+  "last_node_id": 11,
+  "last_link_id": 11,
   "nodes": [
     {
       "id": 1,
@@ -52,25 +52,25 @@
           "localized_name": "MODEL"
         }
       ],
-      "title": "Load HunyuanVideo Model",
       "properties": {
         "Node name for S&R": "UNETLoader"
       },
+      "title": "Load Hunyuan3D Model",
       "widgets_values": [
-        "hunyuan_video_t2v_720p_bf16.safetensors",
+        "hunyuan3d_v2_turbo.safetensors",
         "default"
       ]
     },
     {
       "id": 2,
-      "type": "CLIPLoader",
+      "type": "CLIPVisionLoader",
       "pos": [
         0,
         130
       ],
       "size": [
         290,
-        120
+        82
       ],
       "flags": {},
       "order": 1,
@@ -85,249 +85,224 @@
             "name": "clip_name"
           },
           "link": null
-        },
-        {
-          "label": "type",
-          "localized_name": "type",
-          "name": "type",
-          "type": "COMBO",
-          "widget": {
-            "name": "type"
-          },
-          "link": null
-        },
-        {
-          "label": "device",
-          "localized_name": "device",
-          "name": "device",
-          "type": "COMBO",
-          "widget": {
-            "name": "device"
-          },
-          "link": null
         }
       ],
       "outputs": [
         {
-          "name": "CLIP",
-          "type": "CLIP",
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
           "links": [
-            1,
-            2
+            1
           ],
           "slot_index": 0,
-          "label": "CLIP",
-          "localized_name": "CLIP"
+          "label": "CLIP_VISION",
+          "localized_name": "CLIP_VISION"
         }
       ],
-      "title": "Load CLIP",
       "properties": {
-        "Node name for S&R": "CLIPLoader"
+        "Node name for S&R": "CLIPVisionLoader"
       },
+      "title": "Load CLIP Vision",
       "widgets_values": [
-        "llava_llama3_fp16.safetensors",
-        "wan",
-        "default"
+        "clip_vision_h.safetensors"
       ]
     },
     {
       "id": 3,
-      "type": "VAELoader",
+      "type": "LoadImage",
       "pos": [
         0,
-        300
+        260
       ],
       "size": [
-        290,
-        82
+        280,
+        310
       ],
       "flags": {},
       "order": 2,
       "mode": 0,
       "inputs": [
         {
-          "label": "vae_name",
-          "localized_name": "vae_name",
-          "name": "vae_name",
+          "label": "image",
+          "localized_name": "image",
+          "name": "image",
           "type": "COMBO",
           "widget": {
-            "name": "vae_name"
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "label": "upload",
+          "localized_name": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
           },
           "link": null
         }
       ],
       "outputs": [
         {
-          "name": "VAE",
-          "type": "VAE",
+          "name": "IMAGE",
+          "type": "IMAGE",
           "links": [
-            8
+            2
           ],
           "slot_index": 0,
-          "label": "VAE",
-          "localized_name": "VAE"
+          "label": "IMAGE",
+          "localized_name": "IMAGE"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1,
+          "label": "MASK",
+          "localized_name": "MASK"
         }
       ],
-      "title": "Load VAE",
       "properties": {
-        "Node name for S&R": "VAELoader"
+        "Node name for S&R": "LoadImage"
       },
+      "title": "Load Input Image",
       "widgets_values": [
-        "hunyuan_video_vae_bf16.safetensors"
+        "input.png"
       ]
     },
     {
       "id": 4,
-      "type": "CLIPTextEncode",
+      "type": "CLIPVisionEncode",
       "pos": [
-        400,
-        0
+        380,
+        130
       ],
       "size": [
-        280,
-        120
+        250,
+        100
       ],
       "flags": {},
       "order": 3,
       "mode": 0,
       "inputs": [
         {
-          "name": "clip",
-          "type": "CLIP",
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
           "link": 1,
-          "label": "clip",
-          "localized_name": "clip"
+          "label": "clip_vision",
+          "localized_name": "clip_vision"
         },
         {
-          "label": "text",
-          "localized_name": "text",
-          "name": "text",
-          "type": "STRING",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 2,
+          "label": "image",
+          "localized_name": "image"
+        },
+        {
+          "label": "crop",
+          "localized_name": "crop",
+          "name": "crop",
+          "type": "COMBO",
           "widget": {
-            "name": "text"
+            "name": "crop"
           },
           "link": null
         }
       ],
       "outputs": [
         {
-          "name": "CONDITIONING",
-          "type": "CONDITIONING",
+          "name": "CLIP_VISION_OUTPUT",
+          "type": "CLIP_VISION_OUTPUT",
           "links": [
             3
           ],
           "slot_index": 0,
-          "label": "CONDITIONING",
-          "localized_name": "CONDITIONING"
+          "label": "CLIP_VISION_OUTPUT",
+          "localized_name": "CLIP_VISION_OUTPUT"
         }
       ],
-      "title": "Positive Prompt",
       "properties": {
-        "Node name for S&R": "CLIPTextEncode"
+        "Node name for S&R": "CLIPVisionEncode"
       },
+      "title": "Encode Vision",
       "widgets_values": [
-        "a person walking through a beautiful forest, sunlight filtering through trees, cinematic quality, smooth motion"
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
+        "center"
+      ]
     },
     {
       "id": 5,
-      "type": "CLIPTextEncode",
+      "type": "Hunyuan3Dv2Conditioning",
       "pos": [
-        400,
-        170
+        380,
+        280
       ],
       "size": [
         280,
-        120
+        80
       ],
       "flags": {},
       "order": 4,
       "mode": 0,
       "inputs": [
         {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 2,
-          "label": "clip",
-          "localized_name": "clip"
-        },
-        {
-          "label": "text",
-          "localized_name": "text",
-          "name": "text",
-          "type": "STRING",
-          "widget": {
-            "name": "text"
-          },
-          "link": null
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 3,
+          "label": "clip_vision_output",
+          "localized_name": "clip_vision_output"
         }
       ],
       "outputs": [
         {
-          "name": "CONDITIONING",
+          "name": "positive",
           "type": "CONDITIONING",
           "links": [
             4
           ],
           "slot_index": 0,
-          "label": "CONDITIONING",
-          "localized_name": "CONDITIONING"
+          "label": "positive",
+          "localized_name": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            5
+          ],
+          "slot_index": 1,
+          "label": "negative",
+          "localized_name": "negative"
         }
       ],
-      "title": "Negative Prompt",
       "properties": {
-        "Node name for S&R": "CLIPTextEncode"
+        "Node name for S&R": "Hunyuan3Dv2Conditioning"
       },
-      "widgets_values": [
-        "worst quality, blurry, distorted"
-      ],
-      "color": "#322",
-      "bgcolor": "#533"
+      "title": "Hunyuan3D Conditioning"
     },
     {
       "id": 6,
-      "type": "EmptyHunyuanLatentVideo",
+      "type": "EmptyLatentHunyuan3Dv2",
       "pos": [
-        400,
-        340
+        380,
+        410
       ],
       "size": [
         225,
-        130
+        82
       ],
       "flags": {},
       "order": 5,
       "mode": 0,
       "inputs": [
         {
-          "label": "width",
-          "localized_name": "width",
-          "name": "width",
+          "label": "resolution",
+          "localized_name": "resolution",
+          "name": "resolution",
           "type": "INT",
           "widget": {
-            "name": "width"
-          },
-          "link": null
-        },
-        {
-          "label": "height",
-          "localized_name": "height",
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": null
-        },
-        {
-          "label": "length",
-          "localized_name": "length",
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
+            "name": "resolution"
           },
           "link": null
         },
@@ -347,21 +322,19 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            5
+            7
           ],
           "slot_index": 0,
           "label": "LATENT",
           "localized_name": "LATENT"
         }
       ],
-      "title": "Empty HunyuanVideo Latent",
       "properties": {
-        "Node name for S&R": "EmptyHunyuanLatentVideo"
+        "Node name for S&R": "EmptyLatentHunyuan3Dv2"
       },
+      "title": "Empty 3D Latent",
       "widgets_values": [
-        848,
-        480,
-        25,
+        3072,
         1
       ]
     },
@@ -390,21 +363,21 @@
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 3,
+          "link": 4,
           "label": "positive",
           "localized_name": "positive"
         },
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 4,
+          "link": 5,
           "label": "negative",
           "localized_name": "negative"
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 5,
+          "link": 7,
           "label": "latent_image",
           "localized_name": "latent_image"
         },
@@ -484,7 +457,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            7
+            8
           ],
           "slot_index": 0,
           "label": "LATENT",
@@ -498,79 +471,203 @@
         0,
         "randomize",
         30,
-        6,
+        7,
         "euler",
         "normal",
         1
       ]
     },
     {
-      "id": 8,
-      "type": "VAEDecode",
+      "id": 9,
+      "type": "VAELoader",
       "pos": [
-        1100,
-        0
+        750,
+        390
       ],
       "size": [
-        265,
-        72
+        290,
+        82
       ],
       "flags": {},
       "order": 7,
       "mode": 0,
       "inputs": [
         {
-          "name": "samples",
-          "type": "LATENT",
-          "link": 7,
-          "label": "samples",
-          "localized_name": "samples"
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 8,
-          "label": "vae",
-          "localized_name": "vae"
+          "label": "vae_name",
+          "localized_name": "vae_name",
+          "name": "vae_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "vae_name"
+          },
+          "link": null
         }
       ],
       "outputs": [
         {
-          "name": "IMAGE",
-          "type": "IMAGE",
+          "name": "VAE",
+          "type": "VAE",
           "links": [
             9
           ],
           "slot_index": 0,
-          "label": "IMAGE",
-          "localized_name": "IMAGE"
+          "label": "VAE",
+          "localized_name": "VAE"
         }
       ],
       "properties": {
-        "Node name for S&R": "VAEDecode"
-      }
+        "Node name for S&R": "VAELoader"
+      },
+      "title": "Load 3D VAE",
+      "widgets_values": [
+        "hunyuan3d_v2_vae.safetensors"
+      ]
     },
     {
-      "id": 9,
-      "type": "SaveAnimatedWEBP",
+      "id": 8,
+      "type": "VAEDecodeHunyuan3D",
       "pos": [
         1100,
-        130
+        0
       ],
       "size": [
-        320,
-        270
+        300,
+        106
       ],
       "flags": {},
       "order": 8,
       "mode": 0,
       "inputs": [
         {
-          "name": "images",
-          "type": "IMAGE",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 8,
+          "label": "samples",
+          "localized_name": "samples"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
           "link": 9,
-          "label": "images",
-          "localized_name": "images"
+          "label": "vae",
+          "localized_name": "vae"
+        },
+        {
+          "label": "num_chunks",
+          "localized_name": "num_chunks",
+          "name": "num_chunks",
+          "type": "INT",
+          "widget": {
+            "name": "num_chunks"
+          },
+          "link": null
+        },
+        {
+          "label": "octree_resolution",
+          "localized_name": "octree_resolution",
+          "name": "octree_resolution",
+          "type": "INT",
+          "widget": {
+            "name": "octree_resolution"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VOXEL",
+          "type": "VOXEL",
+          "links": [
+            10
+          ],
+          "slot_index": 0,
+          "label": "VOXEL",
+          "localized_name": "VOXEL"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecodeHunyuan3D"
+      },
+      "title": "Decode to Voxel",
+      "widgets_values": [
+        8000,
+        256
+      ]
+    },
+    {
+      "id": 10,
+      "type": "VoxelToMeshBasic",
+      "pos": [
+        1100,
+        160
+      ],
+      "size": [
+        265,
+        82
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "voxel",
+          "type": "VOXEL",
+          "link": 10,
+          "label": "voxel",
+          "localized_name": "voxel"
+        },
+        {
+          "label": "threshold",
+          "localized_name": "threshold",
+          "name": "threshold",
+          "type": "FLOAT",
+          "widget": {
+            "name": "threshold"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MESH",
+          "type": "MESH",
+          "links": [
+            11
+          ],
+          "slot_index": 0,
+          "label": "MESH",
+          "localized_name": "MESH"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VoxelToMeshBasic"
+      },
+      "title": "Voxel to Mesh",
+      "widgets_values": [
+        0.6
+      ]
+    },
+    {
+      "id": 11,
+      "type": "SaveGLB",
+      "pos": [
+        1100,
+        300
+      ],
+      "size": [
+        320,
+        150
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "link": 11,
+          "label": "mesh",
+          "localized_name": "mesh"
         },
         {
           "label": "filename_prefix",
@@ -581,58 +678,15 @@
             "name": "filename_prefix"
           },
           "link": null
-        },
-        {
-          "label": "fps",
-          "localized_name": "fps",
-          "name": "fps",
-          "type": "FLOAT",
-          "widget": {
-            "name": "fps"
-          },
-          "link": null
-        },
-        {
-          "label": "lossless",
-          "localized_name": "lossless",
-          "name": "lossless",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "lossless"
-          },
-          "link": null
-        },
-        {
-          "label": "quality",
-          "localized_name": "quality",
-          "name": "quality",
-          "type": "INT",
-          "widget": {
-            "name": "quality"
-          },
-          "link": null
-        },
-        {
-          "label": "method",
-          "localized_name": "method",
-          "name": "method",
-          "type": "COMBO",
-          "widget": {
-            "name": "method"
-          },
-          "link": null
         }
       ],
       "outputs": [],
       "properties": {
-        "Node name for S&R": "SaveAnimatedWEBP"
+        "Node name for S&R": "SaveGLB"
       },
+      "title": "Save 3D Model",
       "widgets_values": [
-        "ComfyUI_HunyuanVideo",
-        24,
-        false,
-        85,
-        "default"
+        "mesh/ComfyUI_3D"
       ]
     }
   ],
@@ -643,39 +697,39 @@
       0,
       4,
       0,
-      "CLIP"
+      "CLIP_VISION"
     ],
     [
       2,
-      2,
+      3,
       0,
-      5,
-      0,
-      "CLIP"
+      4,
+      1,
+      "IMAGE"
     ],
     [
       3,
       4,
+      0,
+      5,
+      0,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      4,
+      5,
       0,
       7,
       1,
       "CONDITIONING"
     ],
     [
-      4,
       5,
-      0,
+      5,
+      1,
       7,
       2,
       "CONDITIONING"
-    ],
-    [
-      5,
-      6,
-      0,
-      7,
-      3,
-      "LATENT"
     ],
     [
       6,
@@ -687,6 +741,14 @@
     ],
     [
       7,
+      6,
+      0,
+      7,
+      3,
+      "LATENT"
+    ],
+    [
+      8,
       7,
       0,
       8,
@@ -694,20 +756,28 @@
       "LATENT"
     ],
     [
-      8,
-      3,
+      9,
+      9,
       0,
       8,
       1,
       "VAE"
     ],
     [
-      9,
+      10,
       8,
       0,
-      9,
+      10,
       0,
-      "IMAGE"
+      "VOXEL"
+    ],
+    [
+      11,
+      10,
+      0,
+      11,
+      0,
+      "MESH"
     ]
   ],
   "groups": [],
@@ -716,18 +786,18 @@
   "version": 0.4,
   "models": [
     {
-      "name": "hunyuan_video_t2v_720p_bf16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/diffusion_models/hunyuan_video_t2v_720p_bf16.safetensors",
+      "name": "hunyuan3d_v2_turbo.safetensors",
+      "url": "https://huggingface.co/Tencent/Hunyuan3D-2/resolve/main/hunyuan3d_v2_turbo.safetensors",
       "directory": "diffusion_models"
     },
     {
-      "name": "llava_llama3_fp16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/text_encoders/llava_llama3_fp16.safetensors",
-      "directory": "text_encoders"
+      "name": "clip_vision_h.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors",
+      "directory": "clip_vision"
     },
     {
-      "name": "hunyuan_video_vae_bf16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/vae/hunyuan_video_vae_bf16.safetensors",
+      "name": "hunyuan3d_v2_vae.safetensors",
+      "url": "https://huggingface.co/Tencent/Hunyuan3D-2/resolve/main/hunyuan3d_v2_vae.safetensors",
       "directory": "vae"
     }
   ]

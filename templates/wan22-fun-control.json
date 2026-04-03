@@ -1,8 +1,8 @@
 {
-  "id": "1ae853c7-5228-450d-bd4e-866082cfc509",
+  "id": "ca98fd4e-9c3f-4d0a-a9b8-c4809573207c",
   "revision": 0,
-  "last_node_id": 9,
-  "last_link_id": 10,
+  "last_node_id": 11,
+  "last_link_id": 14,
   "nodes": [
     {
       "id": 1,
@@ -45,19 +45,19 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            6
+            8
           ],
           "slot_index": 0,
           "label": "MODEL",
           "localized_name": "MODEL"
         }
       ],
-      "title": "Load HunyuanVideo Model",
       "properties": {
         "Node name for S&R": "UNETLoader"
       },
+      "title": "Load Wan Fun Control Model",
       "widgets_values": [
-        "hunyuan_video_t2v_720p_bf16.safetensors",
+        "wan2.2_fun_control.safetensors",
         "default"
       ]
     },
@@ -120,12 +120,12 @@
           "localized_name": "CLIP"
         }
       ],
-      "title": "Load CLIP",
       "properties": {
         "Node name for S&R": "CLIPLoader"
       },
+      "title": "Wan CLIP",
       "widgets_values": [
-        "llava_llama3_fp16.safetensors",
+        "umt5_xxl_fp16.safetensors",
         "wan",
         "default"
       ]
@@ -161,26 +161,155 @@
           "name": "VAE",
           "type": "VAE",
           "links": [
-            8
+            5,
+            13
           ],
           "slot_index": 0,
           "label": "VAE",
           "localized_name": "VAE"
         }
       ],
-      "title": "Load VAE",
       "properties": {
         "Node name for S&R": "VAELoader"
       },
+      "title": "Wan VAE",
       "widgets_values": [
-        "hunyuan_video_vae_bf16.safetensors"
+        "wan_2.1_vae.safetensors"
       ]
     },
     {
       "id": 4,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        430
+      ],
+      "size": [
+        280,
+        310
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "label": "upload",
+          "localized_name": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            6
+          ],
+          "slot_index": 0,
+          "label": "IMAGE",
+          "localized_name": "IMAGE"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1,
+          "label": "MASK",
+          "localized_name": "MASK"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "title": "Reference Image",
+      "widgets_values": [
+        "ref_image.png"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        790
+      ],
+      "size": [
+        280,
+        310
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "label": "upload",
+          "localized_name": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            7
+          ],
+          "slot_index": 0,
+          "label": "IMAGE",
+          "localized_name": "IMAGE"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1,
+          "label": "MASK",
+          "localized_name": "MASK"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "title": "Control Video Frames",
+      "widgets_values": [
+        "control_video.png"
+      ]
+    },
+    {
+      "id": 5,
       "type": "CLIPTextEncode",
       "pos": [
-        400,
+        380,
         0
       ],
       "size": [
@@ -188,7 +317,7 @@
         120
       ],
       "flags": {},
-      "order": 3,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
@@ -221,21 +350,21 @@
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "Positive Prompt",
       "properties": {
         "Node name for S&R": "CLIPTextEncode"
       },
+      "title": "Positive Prompt",
       "widgets_values": [
-        "a person walking through a beautiful forest, sunlight filtering through trees, cinematic quality, smooth motion"
+        "a person dancing gracefully, smooth motion, high quality, cinematic"
       ],
       "color": "#232",
       "bgcolor": "#353"
     },
     {
-      "id": 5,
+      "id": 6,
       "type": "CLIPTextEncode",
       "pos": [
-        400,
+        380,
         170
       ],
       "size": [
@@ -243,7 +372,7 @@
         120
       ],
       "flags": {},
-      "order": 4,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
@@ -276,31 +405,68 @@
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "Negative Prompt",
       "properties": {
         "Node name for S&R": "CLIPTextEncode"
       },
+      "title": "Negative Prompt",
       "widgets_values": [
-        "worst quality, blurry, distorted"
+        "worst quality, blurry, distorted, static, jittery"
       ],
       "color": "#322",
       "bgcolor": "#533"
     },
     {
-      "id": 6,
-      "type": "EmptyHunyuanLatentVideo",
+      "id": 8,
+      "type": "Wan22FunControlToVideo",
       "pos": [
-        400,
-        340
+        700,
+        0
       ],
       "size": [
-        225,
-        130
+        260,
+        300
       ],
       "flags": {},
-      "order": 5,
+      "order": 7,
       "mode": 0,
       "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 3,
+          "label": "positive",
+          "localized_name": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 4,
+          "label": "negative",
+          "localized_name": "negative"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 5,
+          "label": "vae",
+          "localized_name": "vae"
+        },
+        {
+          "name": "ref_image",
+          "type": "IMAGE",
+          "link": 6,
+          "shape": 7,
+          "label": "ref_image",
+          "localized_name": "ref_image"
+        },
+        {
+          "name": "control_video",
+          "type": "IMAGE",
+          "link": 7,
+          "shape": 7,
+          "label": "control_video",
+          "localized_name": "control_video"
+        },
         {
           "label": "width",
           "localized_name": "width",
@@ -344,32 +510,52 @@
       ],
       "outputs": [
         {
-          "name": "LATENT",
-          "type": "LATENT",
+          "name": "positive",
+          "type": "CONDITIONING",
           "links": [
-            5
+            9
           ],
           "slot_index": 0,
-          "label": "LATENT",
-          "localized_name": "LATENT"
+          "label": "positive",
+          "localized_name": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            10
+          ],
+          "slot_index": 1,
+          "label": "negative",
+          "localized_name": "negative"
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            11
+          ],
+          "slot_index": 2,
+          "label": "latent",
+          "localized_name": "latent"
         }
       ],
-      "title": "Empty HunyuanVideo Latent",
       "properties": {
-        "Node name for S&R": "EmptyHunyuanLatentVideo"
+        "Node name for S&R": "Wan22FunControlToVideo"
       },
+      "title": "Wan Fun Control to Video",
       "widgets_values": [
-        848,
+        832,
         480,
-        25,
+        81,
         1
       ]
     },
     {
-      "id": 7,
+      "id": 9,
       "type": "KSampler",
       "pos": [
-        750,
+        1050,
         0
       ],
       "size": [
@@ -377,34 +563,34 @@
         340
       ],
       "flags": {},
-      "order": 6,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 6,
+          "link": 8,
           "label": "model",
           "localized_name": "model"
         },
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 3,
+          "link": 9,
           "label": "positive",
           "localized_name": "positive"
         },
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 4,
+          "link": 10,
           "label": "negative",
           "localized_name": "negative"
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 5,
+          "link": 11,
           "label": "latent_image",
           "localized_name": "latent_image"
         },
@@ -484,7 +670,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            7
+            12
           ],
           "slot_index": 0,
           "label": "LATENT",
@@ -497,7 +683,7 @@
       "widgets_values": [
         0,
         "randomize",
-        30,
+        25,
         6,
         "euler",
         "normal",
@@ -505,10 +691,10 @@
       ]
     },
     {
-      "id": 8,
+      "id": 10,
       "type": "VAEDecode",
       "pos": [
-        1100,
+        1400,
         0
       ],
       "size": [
@@ -516,20 +702,20 @@
         72
       ],
       "flags": {},
-      "order": 7,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 7,
+          "link": 12,
           "label": "samples",
           "localized_name": "samples"
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 8,
+          "link": 13,
           "label": "vae",
           "localized_name": "vae"
         }
@@ -539,7 +725,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            9
+            14
           ],
           "slot_index": 0,
           "label": "IMAGE",
@@ -551,24 +737,24 @@
       }
     },
     {
-      "id": 9,
+      "id": 11,
       "type": "SaveAnimatedWEBP",
       "pos": [
-        1100,
-        130
+        1400,
+        120
       ],
       "size": [
         320,
         270
       ],
       "flags": {},
-      "order": 8,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 9,
+          "link": 14,
           "label": "images",
           "localized_name": "images"
         },
@@ -627,9 +813,10 @@
       "properties": {
         "Node name for S&R": "SaveAnimatedWEBP"
       },
+      "title": "Save Video",
       "widgets_values": [
-        "ComfyUI_HunyuanVideo",
-        24,
+        "ComfyUI_Wan_FunCtrl",
+        16,
         false,
         85,
         "default"
@@ -641,71 +828,111 @@
       1,
       2,
       0,
-      4,
-      0,
-      "CLIP"
-    ],
-    [
-      2,
-      2,
-      0,
       5,
       0,
       "CLIP"
     ],
     [
-      3,
-      4,
-      0,
-      7,
-      1,
-      "CONDITIONING"
-    ],
-    [
-      4,
-      5,
-      0,
-      7,
       2,
+      2,
+      0,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      3,
+      5,
+      0,
+      8,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      4,
+      6,
+      0,
+      8,
+      1,
       "CONDITIONING"
     ],
     [
       5,
-      6,
-      0,
-      7,
       3,
-      "LATENT"
+      0,
+      8,
+      2,
+      "VAE"
     ],
     [
       6,
+      4,
+      0,
+      8,
+      3,
+      "IMAGE"
+    ],
+    [
+      7,
+      7,
+      0,
+      8,
+      4,
+      "IMAGE"
+    ],
+    [
+      8,
       1,
       0,
-      7,
+      9,
       0,
       "MODEL"
     ],
     [
-      7,
-      7,
-      0,
+      9,
       8,
+      0,
+      9,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      10,
+      8,
+      1,
+      9,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      11,
+      8,
+      2,
+      9,
+      3,
+      "LATENT"
+    ],
+    [
+      12,
+      9,
+      0,
+      10,
       0,
       "LATENT"
     ],
     [
-      8,
+      13,
       3,
       0,
-      8,
+      10,
       1,
       "VAE"
     ],
     [
-      9,
-      8,
+      14,
+      10,
       0,
-      9,
+      11,
       0,
       "IMAGE"
     ]
@@ -716,18 +943,13 @@
   "version": 0.4,
   "models": [
     {
-      "name": "hunyuan_video_t2v_720p_bf16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/diffusion_models/hunyuan_video_t2v_720p_bf16.safetensors",
-      "directory": "diffusion_models"
-    },
-    {
-      "name": "llava_llama3_fp16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/text_encoders/llava_llama3_fp16.safetensors",
+      "name": "umt5_xxl_fp16.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors",
       "directory": "text_encoders"
     },
     {
-      "name": "hunyuan_video_vae_bf16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/vae/hunyuan_video_vae_bf16.safetensors",
+      "name": "wan_2.1_vae.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
       "directory": "vae"
     }
   ]

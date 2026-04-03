@@ -1,82 +1,708 @@
 {
-  "1": {
-    "class_type": "CheckpointLoaderSimple",
-    "inputs": {
-      "ckpt_name": "sd15_inpainting_model.safetensors"
+  "id": "97d2eaff-0bee-47e5-aa76-cb6cb699af7f",
+  "revision": 0,
+  "last_node_id": 9,
+  "last_link_id": 10,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        315,
+        98
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "ckpt_name",
+          "localized_name": "ckpt_name",
+          "name": "ckpt_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "ckpt_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            6
+          ],
+          "slot_index": 0,
+          "label": "MODEL",
+          "localized_name": "MODEL"
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            4,
+            5
+          ],
+          "slot_index": 1,
+          "label": "CLIP",
+          "localized_name": "CLIP"
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            3,
+            9
+          ],
+          "slot_index": 2,
+          "label": "VAE",
+          "localized_name": "VAE"
+        }
+      ],
+      "title": "Load Inpainting Checkpoint",
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "sd-v1-5-inpainting.ckpt"
+      ]
     },
-    "_meta": { "title": "Load Inpainting Checkpoint" }
-  },
-  "2": {
-    "class_type": "LoadImage",
-    "inputs": {
-      "image": "input_image.png"
+    {
+      "id": 2,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        150
+      ],
+      "size": [
+        280,
+        310
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "label": "upload",
+          "localized_name": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1
+          ],
+          "slot_index": 0,
+          "label": "IMAGE",
+          "localized_name": "IMAGE"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "label": "MASK",
+          "localized_name": "MASK"
+        }
+      ],
+      "title": "Load Image",
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "input_image.png"
+      ]
     },
-    "_meta": { "title": "Load Image" }
-  },
-  "3": {
-    "class_type": "LoadImageMask",
-    "inputs": {
-      "image": "mask_image.png",
-      "channel": "alpha"
+    {
+      "id": 3,
+      "type": "LoadImageMask",
+      "pos": [
+        0,
+        510
+      ],
+      "size": [
+        280,
+        310
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "label": "channel",
+          "localized_name": "channel",
+          "name": "channel",
+          "type": "COMBO",
+          "widget": {
+            "name": "channel"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            2
+          ],
+          "slot_index": 0,
+          "label": "MASK",
+          "localized_name": "MASK"
+        }
+      ],
+      "title": "Load Mask",
+      "properties": {
+        "Node name for S&R": "LoadImageMask"
+      },
+      "widgets_values": [
+        "mask_image.png",
+        "alpha"
+      ]
     },
-    "_meta": { "title": "Load Mask" }
-  },
-  "4": {
-    "class_type": "VAEEncodeForInpaint",
-    "inputs": {
-      "pixels": ["2", 0],
-      "vae": ["1", 2],
-      "mask": ["3", 0],
-      "grow_mask_by": 6
+    {
+      "id": 4,
+      "type": "VAEEncodeForInpaint",
+      "pos": [
+        400,
+        150
+      ],
+      "size": [
+        265,
+        120
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 1,
+          "label": "pixels",
+          "localized_name": "pixels"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 3,
+          "label": "vae",
+          "localized_name": "vae"
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 2,
+          "label": "mask",
+          "localized_name": "mask"
+        },
+        {
+          "label": "grow_mask_by",
+          "localized_name": "grow_mask_by",
+          "name": "grow_mask_by",
+          "type": "INT",
+          "widget": {
+            "name": "grow_mask_by"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            8
+          ],
+          "slot_index": 0,
+          "label": "LATENT",
+          "localized_name": "LATENT"
+        }
+      ],
+      "title": "VAE Encode (Inpaint)",
+      "properties": {
+        "Node name for S&R": "VAEEncodeForInpaint"
+      },
+      "widgets_values": [
+        6
+      ]
     },
-    "_meta": { "title": "VAE Encode (Inpaint)" }
-  },
-  "5": {
-    "class_type": "CLIPTextEncode",
-    "inputs": {
-      "text": "masterpiece, best quality, seamless inpainting",
-      "clip": ["1", 1]
+    {
+      "id": 5,
+      "type": "CLIPTextEncode",
+      "pos": [
+        400,
+        0
+      ],
+      "size": [
+        280,
+        100
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4,
+          "label": "clip",
+          "localized_name": "clip"
+        },
+        {
+          "label": "text",
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            7
+          ],
+          "slot_index": 0,
+          "label": "CONDITIONING",
+          "localized_name": "CONDITIONING"
+        }
+      ],
+      "title": "Positive Prompt",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "masterpiece, best quality, seamless inpainting"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
     },
-    "_meta": { "title": "Positive Prompt" }
-  },
-  "6": {
-    "class_type": "CLIPTextEncode",
-    "inputs": {
-      "text": "worst quality, low quality, blurry",
-      "clip": ["1", 1]
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        400,
+        320
+      ],
+      "size": [
+        280,
+        100
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 5,
+          "label": "clip",
+          "localized_name": "clip"
+        },
+        {
+          "label": "text",
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            10
+          ],
+          "slot_index": 0,
+          "label": "CONDITIONING",
+          "localized_name": "CONDITIONING"
+        }
+      ],
+      "title": "Negative Prompt",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "worst quality, low quality, blurry"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
     },
-    "_meta": { "title": "Negative Prompt" }
-  },
-  "7": {
-    "class_type": "KSampler",
-    "inputs": {
-      "model": ["1", 0],
-      "positive": ["5", 0],
-      "negative": ["6", 0],
-      "latent_image": ["4", 0],
-      "seed": 0,
-      "steps": 20,
-      "cfg": 7.0,
-      "sampler_name": "euler_ancestral",
-      "scheduler": "karras",
-      "denoise": 1.0
+    {
+      "id": 7,
+      "type": "KSampler",
+      "pos": [
+        750,
+        0
+      ],
+      "size": [
+        300,
+        340
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 6,
+          "label": "model",
+          "localized_name": "model"
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 7,
+          "label": "positive",
+          "localized_name": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 10,
+          "label": "negative",
+          "localized_name": "negative"
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 8,
+          "label": "latent_image",
+          "localized_name": "latent_image"
+        },
+        {
+          "label": "seed",
+          "localized_name": "seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "label": "control_after_generate",
+          "localized_name": "control_after_generate",
+          "name": "control_after_generate",
+          "type": "COMBO",
+          "widget": {
+            "name": "control_after_generate"
+          },
+          "link": null
+        },
+        {
+          "label": "steps",
+          "localized_name": "steps",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": null
+        },
+        {
+          "label": "cfg",
+          "localized_name": "cfg",
+          "name": "cfg",
+          "type": "FLOAT",
+          "widget": {
+            "name": "cfg"
+          },
+          "link": null
+        },
+        {
+          "label": "sampler_name",
+          "localized_name": "sampler_name",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": null
+        },
+        {
+          "label": "scheduler",
+          "localized_name": "scheduler",
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": null
+        },
+        {
+          "label": "denoise",
+          "localized_name": "denoise",
+          "name": "denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "denoise"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            11
+          ],
+          "slot_index": 0,
+          "label": "LATENT",
+          "localized_name": "LATENT"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        0,
+        "randomize",
+        20,
+        7,
+        "euler_ancestral",
+        "karras",
+        1
+      ]
     },
-    "_meta": { "title": "KSampler" }
-  },
-  "8": {
-    "class_type": "VAEDecode",
-    "inputs": {
-      "samples": ["7", 0],
-      "vae": ["1", 2]
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [
+        1100,
+        0
+      ],
+      "size": [
+        265,
+        72
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 11,
+          "label": "samples",
+          "localized_name": "samples"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 9,
+          "label": "vae",
+          "localized_name": "vae"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            12
+          ],
+          "slot_index": 0,
+          "label": "IMAGE",
+          "localized_name": "IMAGE"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
     },
-    "_meta": { "title": "VAE Decode" }
-  },
-  "9": {
-    "class_type": "SaveImage",
-    "inputs": {
-      "images": ["8", 0],
-      "filename_prefix": "ComfyUI_Inpaint"
-    },
-    "_meta": { "title": "Save Image" }
-  }
+    {
+      "id": 9,
+      "type": "SaveImage",
+      "pos": [
+        1100,
+        130
+      ],
+      "size": [
+        320,
+        270
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 12,
+          "label": "images",
+          "localized_name": "images"
+        },
+        {
+          "label": "filename_prefix",
+          "localized_name": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI_Inpaint"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      2,
+      0,
+      4,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      3,
+      0,
+      4,
+      2,
+      "MASK"
+    ],
+    [
+      3,
+      1,
+      2,
+      4,
+      1,
+      "VAE"
+    ],
+    [
+      4,
+      1,
+      1,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      5,
+      1,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      6,
+      1,
+      0,
+      7,
+      0,
+      "MODEL"
+    ],
+    [
+      7,
+      5,
+      0,
+      7,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      8,
+      4,
+      0,
+      7,
+      3,
+      "LATENT"
+    ],
+    [
+      9,
+      1,
+      2,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      10,
+      6,
+      0,
+      7,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      11,
+      7,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      12,
+      8,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4,
+  "models": [
+    {
+      "name": "sd-v1-5-inpainting.ckpt",
+      "url": "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-inpainting/resolve/main/sd-v1-5-inpainting.ckpt",
+      "directory": "checkpoints"
+    }
+  ]
 }

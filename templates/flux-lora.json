@@ -1,8 +1,8 @@
 {
-  "id": "d1248fbb-676f-43cf-945d-7fb9e3b888b7",
+  "id": "985d6882-3143-4bf8-9123-2873acc05fa4",
   "revision": 0,
-  "last_node_id": 12,
-  "last_link_id": 12,
+  "last_node_id": 13,
+  "last_link_id": 14,
   "nodes": [
     {
       "id": 1,
@@ -45,18 +45,17 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            5,
-            7
+            1
           ],
           "slot_index": 0,
           "label": "MODEL",
           "localized_name": "MODEL"
         }
       ],
-      "title": "Load FLUX Model",
       "properties": {
         "Node name for S&R": "UNETLoader"
       },
+      "title": "Load FLUX Model",
       "widgets_values": [
         "flux1-dev.safetensors",
         "default"
@@ -113,17 +112,17 @@
           "name": "CLIP",
           "type": "CLIP",
           "links": [
-            1
+            2
           ],
           "slot_index": 0,
           "label": "CLIP",
           "localized_name": "CLIP"
         }
       ],
-      "title": "Load CLIP (FLUX)",
       "properties": {
         "Node name for S&R": "DualCLIPLoader"
       },
+      "title": "Load CLIP (FLUX)",
       "widgets_values": [
         "clip_l.safetensors",
         "t5xxl_fp16.safetensors",
@@ -161,19 +160,112 @@
           "name": "VAE",
           "type": "VAE",
           "links": [
-            11
+            13
           ],
           "slot_index": 0,
           "label": "VAE",
           "localized_name": "VAE"
         }
       ],
-      "title": "Load VAE",
       "properties": {
         "Node name for S&R": "VAELoader"
       },
+      "title": "Load VAE",
       "widgets_values": [
         "ae.safetensors"
+      ]
+    },
+    {
+      "id": 13,
+      "type": "LoraLoader",
+      "pos": [
+        0,
+        430
+      ],
+      "size": [
+        315,
+        126
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1,
+          "label": "model",
+          "localized_name": "model"
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2,
+          "label": "clip",
+          "localized_name": "clip"
+        },
+        {
+          "label": "lora_name",
+          "localized_name": "lora_name",
+          "name": "lora_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "lora_name"
+          },
+          "link": null
+        },
+        {
+          "label": "strength_model",
+          "localized_name": "strength_model",
+          "name": "strength_model",
+          "type": "FLOAT",
+          "widget": {
+            "name": "strength_model"
+          },
+          "link": null
+        },
+        {
+          "label": "strength_clip",
+          "localized_name": "strength_clip",
+          "name": "strength_clip",
+          "type": "FLOAT",
+          "widget": {
+            "name": "strength_clip"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            3,
+            4
+          ],
+          "slot_index": 0,
+          "label": "MODEL",
+          "localized_name": "MODEL"
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            5
+          ],
+          "slot_index": 1,
+          "label": "CLIP",
+          "localized_name": "CLIP"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoader"
+      },
+      "title": "Load LoRA",
+      "widgets_values": [
+        "example_flux_lora.safetensors",
+        1.0,
+        1.0
       ]
     },
     {
@@ -188,13 +280,13 @@
         180
       ],
       "flags": {},
-      "order": 3,
+      "order": 4,
       "mode": 0,
       "inputs": [
         {
           "name": "clip",
           "type": "CLIP",
-          "link": 1,
+          "link": 5,
           "label": "clip",
           "localized_name": "clip"
         },
@@ -234,20 +326,20 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            2
+            6
           ],
           "slot_index": 0,
           "label": "CONDITIONING",
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "FLUX Text Encode",
       "properties": {
         "Node name for S&R": "CLIPTextEncodeFlux"
       },
+      "title": "FLUX Text Encode",
       "widgets_values": [
-        "a beautiful woman in a garden",
-        "a beautiful woman standing in a lush garden with blooming flowers, soft natural lighting, photorealistic, high detail",
+        "a beautiful scene",
+        "a beautiful woman standing in a lush garden, photorealistic, detailed",
         3.5
       ],
       "color": "#232",
@@ -265,7 +357,7 @@
         106
       ],
       "flags": {},
-      "order": 4,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
@@ -304,7 +396,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            10
+            11
           ],
           "slot_index": 0,
           "label": "LATENT",
@@ -332,20 +424,20 @@
         72
       ],
       "flags": {},
-      "order": 5,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 5,
+          "link": 3,
           "label": "model",
           "localized_name": "model"
         },
         {
           "name": "conditioning",
           "type": "CONDITIONING",
-          "link": 2,
+          "link": 6,
           "label": "conditioning",
           "localized_name": "conditioning"
         }
@@ -355,7 +447,7 @@
           "name": "GUIDER",
           "type": "GUIDER",
           "links": [
-            3
+            7
           ],
           "slot_index": 0,
           "label": "GUIDER",
@@ -378,7 +470,7 @@
         58
       ],
       "flags": {},
-      "order": 6,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
@@ -397,7 +489,7 @@
           "name": "SAMPLER",
           "type": "SAMPLER",
           "links": [
-            4
+            8
           ],
           "slot_index": 0,
           "label": "SAMPLER",
@@ -423,13 +515,13 @@
         106
       ],
       "flags": {},
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 7,
+          "link": 4,
           "label": "model",
           "localized_name": "model"
         },
@@ -469,7 +561,7 @@
           "name": "SIGMAS",
           "type": "SIGMAS",
           "links": [
-            6
+            9
           ],
           "slot_index": 0,
           "label": "SIGMAS",
@@ -494,10 +586,10 @@
       ],
       "size": [
         225,
-        58
+        82
       ],
       "flags": {},
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -526,7 +618,7 @@
           "name": "NOISE",
           "type": "NOISE",
           "links": [
-            8
+            10
           ],
           "slot_index": 0,
           "label": "NOISE",
@@ -553,41 +645,41 @@
         160
       ],
       "flags": {},
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
           "name": "noise",
           "type": "NOISE",
-          "link": 8,
+          "link": 10,
           "label": "noise",
           "localized_name": "noise"
         },
         {
           "name": "guider",
           "type": "GUIDER",
-          "link": 3,
+          "link": 7,
           "label": "guider",
           "localized_name": "guider"
         },
         {
           "name": "sampler",
           "type": "SAMPLER",
-          "link": 4,
+          "link": 8,
           "label": "sampler",
           "localized_name": "sampler"
         },
         {
           "name": "sigmas",
           "type": "SIGMAS",
-          "link": 6,
+          "link": 9,
           "label": "sigmas",
           "localized_name": "sigmas"
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 10,
+          "link": 11,
           "label": "latent_image",
           "localized_name": "latent_image"
         }
@@ -597,7 +689,7 @@
           "name": "output",
           "type": "LATENT",
           "links": [
-            9
+            12
           ],
           "slot_index": 0,
           "label": "output",
@@ -628,20 +720,20 @@
         72
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 9,
+          "link": 12,
           "label": "samples",
           "localized_name": "samples"
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 11,
+          "link": 13,
           "label": "vae",
           "localized_name": "vae"
         }
@@ -651,7 +743,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            12
+            14
           ],
           "slot_index": 0,
           "label": "IMAGE",
@@ -667,20 +759,20 @@
       "type": "SaveImage",
       "pos": [
         1400,
-        130
+        120
       ],
       "size": [
         320,
         270
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 12,
+          "link": 14,
           "label": "images",
           "localized_name": "images"
         },
@@ -699,22 +791,55 @@
       "properties": {
         "Node name for S&R": "SaveImage"
       },
+      "title": "Save Image",
       "widgets_values": [
-        "ComfyUI_FLUX"
+        "ComfyUI_FLUX_LoRA"
       ]
     }
   ],
   "links": [
     [
       1,
+      1,
+      0,
+      13,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
       2,
       0,
+      13,
+      1,
+      "CLIP"
+    ],
+    [
+      3,
+      13,
+      0,
+      6,
+      0,
+      "MODEL"
+    ],
+    [
+      4,
+      13,
+      0,
+      8,
+      0,
+      "MODEL"
+    ],
+    [
+      5,
+      13,
+      1,
       4,
       0,
       "CLIP"
     ],
     [
-      2,
+      6,
       4,
       0,
       6,
@@ -722,7 +847,7 @@
       "CONDITIONING"
     ],
     [
-      3,
+      7,
       6,
       0,
       10,
@@ -730,7 +855,7 @@
       "GUIDER"
     ],
     [
-      4,
+      8,
       7,
       0,
       10,
@@ -738,15 +863,7 @@
       "SAMPLER"
     ],
     [
-      5,
-      1,
-      0,
-      6,
-      0,
-      "MODEL"
-    ],
-    [
-      6,
+      9,
       8,
       0,
       10,
@@ -754,15 +871,7 @@
       "SIGMAS"
     ],
     [
-      7,
-      1,
-      0,
-      8,
-      0,
-      "MODEL"
-    ],
-    [
-      8,
+      10,
       9,
       0,
       10,
@@ -770,15 +879,7 @@
       "NOISE"
     ],
     [
-      9,
-      10,
-      0,
       11,
-      0,
-      "LATENT"
-    ],
-    [
-      10,
       5,
       0,
       10,
@@ -786,7 +887,15 @@
       "LATENT"
     ],
     [
+      12,
+      10,
+      0,
       11,
+      0,
+      "LATENT"
+    ],
+    [
+      13,
       3,
       0,
       11,
@@ -794,7 +903,7 @@
       "VAE"
     ],
     [
-      12,
+      14,
       11,
       0,
       12,

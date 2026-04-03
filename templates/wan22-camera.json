@@ -1,8 +1,8 @@
 {
-  "id": "1ae853c7-5228-450d-bd4e-866082cfc509",
+  "id": "a5c25bcb-1805-483b-951b-74103d656dc0",
   "revision": 0,
-  "last_node_id": 9,
-  "last_link_id": 10,
+  "last_node_id": 12,
+  "last_link_id": 16,
   "nodes": [
     {
       "id": 1,
@@ -45,19 +45,19 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            6
+            10
           ],
           "slot_index": 0,
           "label": "MODEL",
           "localized_name": "MODEL"
         }
       ],
-      "title": "Load HunyuanVideo Model",
       "properties": {
         "Node name for S&R": "UNETLoader"
       },
+      "title": "Load Wan Camera Model",
       "widgets_values": [
-        "hunyuan_video_t2v_720p_bf16.safetensors",
+        "wan2.2_i2v_480p_14b.safetensors",
         "default"
       ]
     },
@@ -120,12 +120,12 @@
           "localized_name": "CLIP"
         }
       ],
-      "title": "Load CLIP",
       "properties": {
         "Node name for S&R": "CLIPLoader"
       },
+      "title": "Wan CLIP",
       "widgets_values": [
-        "llava_llama3_fp16.safetensors",
+        "umt5_xxl_fp16.safetensors",
         "wan",
         "default"
       ]
@@ -161,26 +161,138 @@
           "name": "VAE",
           "type": "VAE",
           "links": [
-            8
+            7,
+            15
           ],
           "slot_index": 0,
           "label": "VAE",
           "localized_name": "VAE"
         }
       ],
-      "title": "Load VAE",
       "properties": {
         "Node name for S&R": "VAELoader"
       },
+      "title": "Wan VAE",
       "widgets_values": [
-        "hunyuan_video_vae_bf16.safetensors"
+        "wan_2.1_vae.safetensors"
       ]
     },
     {
       "id": 4,
+      "type": "CLIPVisionLoader",
+      "pos": [
+        0,
+        430
+      ],
+      "size": [
+        290,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "clip_name",
+          "localized_name": "clip_name",
+          "name": "clip_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
+          "links": [
+            3
+          ],
+          "slot_index": 0,
+          "label": "CLIP_VISION",
+          "localized_name": "CLIP_VISION"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPVisionLoader"
+      },
+      "title": "CLIP Vision",
+      "widgets_values": [
+        "clip_vision_h.safetensors"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        560
+      ],
+      "size": [
+        280,
+        310
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "label": "upload",
+          "localized_name": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            4,
+            9
+          ],
+          "slot_index": 0,
+          "label": "IMAGE",
+          "localized_name": "IMAGE"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1,
+          "label": "MASK",
+          "localized_name": "MASK"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "title": "Start Image",
+      "widgets_values": [
+        "start_frame.png"
+      ]
+    },
+    {
+      "id": 6,
       "type": "CLIPTextEncode",
       "pos": [
-        400,
+        380,
         0
       ],
       "size": [
@@ -188,7 +300,7 @@
         120
       ],
       "flags": {},
-      "order": 3,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
@@ -214,28 +326,28 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            3
+            5
           ],
           "slot_index": 0,
           "label": "CONDITIONING",
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "Positive Prompt",
       "properties": {
         "Node name for S&R": "CLIPTextEncode"
       },
+      "title": "Positive Prompt",
       "widgets_values": [
-        "a person walking through a beautiful forest, sunlight filtering through trees, cinematic quality, smooth motion"
+        "camera orbits around a beautiful castle, cinematic drone shot, smooth motion"
       ],
       "color": "#232",
       "bgcolor": "#353"
     },
     {
-      "id": 5,
+      "id": 7,
       "type": "CLIPTextEncode",
       "pos": [
-        400,
+        380,
         170
       ],
       "size": [
@@ -243,7 +355,7 @@
         120
       ],
       "flags": {},
-      "order": 4,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
@@ -269,38 +381,135 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            4
+            6
           ],
           "slot_index": 0,
           "label": "CONDITIONING",
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "Negative Prompt",
       "properties": {
         "Node name for S&R": "CLIPTextEncode"
       },
+      "title": "Negative Prompt",
       "widgets_values": [
-        "worst quality, blurry, distorted"
+        "worst quality, blurry, distorted, static, jittery"
       ],
       "color": "#322",
       "bgcolor": "#533"
     },
     {
-      "id": 6,
-      "type": "EmptyHunyuanLatentVideo",
+      "id": 8,
+      "type": "CLIPVisionEncode",
       "pos": [
-        400,
-        340
+        380,
+        430
       ],
       "size": [
-        225,
-        130
+        250,
+        100
       ],
       "flags": {},
-      "order": 5,
+      "order": 7,
       "mode": 0,
       "inputs": [
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 3,
+          "label": "clip_vision",
+          "localized_name": "clip_vision"
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 4,
+          "label": "image",
+          "localized_name": "image"
+        },
+        {
+          "label": "crop",
+          "localized_name": "crop",
+          "name": "crop",
+          "type": "COMBO",
+          "widget": {
+            "name": "crop"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP_VISION_OUTPUT",
+          "type": "CLIP_VISION_OUTPUT",
+          "links": [
+            8
+          ],
+          "slot_index": 0,
+          "label": "CLIP_VISION_OUTPUT",
+          "localized_name": "CLIP_VISION_OUTPUT"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPVisionEncode"
+      },
+      "title": "Encode Vision",
+      "widgets_values": [
+        "center"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "WanCameraImageToVideo",
+      "pos": [
+        700,
+        0
+      ],
+      "size": [
+        260,
+        300
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 5,
+          "label": "positive",
+          "localized_name": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 6,
+          "label": "negative",
+          "localized_name": "negative"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 7,
+          "label": "vae",
+          "localized_name": "vae"
+        },
+        {
+          "name": "clip_vision_output",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 8,
+          "shape": 7,
+          "label": "clip_vision_output",
+          "localized_name": "clip_vision_output"
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 9,
+          "shape": 7,
+          "label": "start_image",
+          "localized_name": "start_image"
+        },
         {
           "label": "width",
           "localized_name": "width",
@@ -344,32 +553,52 @@
       ],
       "outputs": [
         {
-          "name": "LATENT",
-          "type": "LATENT",
+          "name": "positive",
+          "type": "CONDITIONING",
           "links": [
-            5
+            11
           ],
           "slot_index": 0,
-          "label": "LATENT",
-          "localized_name": "LATENT"
+          "label": "positive",
+          "localized_name": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            12
+          ],
+          "slot_index": 1,
+          "label": "negative",
+          "localized_name": "negative"
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            13
+          ],
+          "slot_index": 2,
+          "label": "latent",
+          "localized_name": "latent"
         }
       ],
-      "title": "Empty HunyuanVideo Latent",
       "properties": {
-        "Node name for S&R": "EmptyHunyuanLatentVideo"
+        "Node name for S&R": "WanCameraImageToVideo"
       },
+      "title": "Wan Camera I2V (connect camera_conditions)",
       "widgets_values": [
-        848,
+        832,
         480,
-        25,
+        81,
         1
       ]
     },
     {
-      "id": 7,
+      "id": 10,
       "type": "KSampler",
       "pos": [
-        750,
+        1050,
         0
       ],
       "size": [
@@ -377,34 +606,34 @@
         340
       ],
       "flags": {},
-      "order": 6,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 6,
+          "link": 10,
           "label": "model",
           "localized_name": "model"
         },
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 3,
+          "link": 11,
           "label": "positive",
           "localized_name": "positive"
         },
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 4,
+          "link": 12,
           "label": "negative",
           "localized_name": "negative"
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 5,
+          "link": 13,
           "label": "latent_image",
           "localized_name": "latent_image"
         },
@@ -484,7 +713,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            7
+            14
           ],
           "slot_index": 0,
           "label": "LATENT",
@@ -497,7 +726,7 @@
       "widgets_values": [
         0,
         "randomize",
-        30,
+        25,
         6,
         "euler",
         "normal",
@@ -505,10 +734,10 @@
       ]
     },
     {
-      "id": 8,
+      "id": 11,
       "type": "VAEDecode",
       "pos": [
-        1100,
+        1400,
         0
       ],
       "size": [
@@ -516,20 +745,20 @@
         72
       ],
       "flags": {},
-      "order": 7,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 7,
+          "link": 14,
           "label": "samples",
           "localized_name": "samples"
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 8,
+          "link": 15,
           "label": "vae",
           "localized_name": "vae"
         }
@@ -539,7 +768,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            9
+            16
           ],
           "slot_index": 0,
           "label": "IMAGE",
@@ -551,24 +780,24 @@
       }
     },
     {
-      "id": 9,
+      "id": 12,
       "type": "SaveAnimatedWEBP",
       "pos": [
-        1100,
-        130
+        1400,
+        120
       ],
       "size": [
         320,
         270
       ],
       "flags": {},
-      "order": 8,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 9,
+          "link": 16,
           "label": "images",
           "localized_name": "images"
         },
@@ -627,9 +856,10 @@
       "properties": {
         "Node name for S&R": "SaveAnimatedWEBP"
       },
+      "title": "Save Video",
       "widgets_values": [
-        "ComfyUI_HunyuanVideo",
-        24,
+        "ComfyUI_Wan_Camera",
+        16,
         false,
         85,
         "default"
@@ -641,7 +871,7 @@
       1,
       2,
       0,
-      4,
+      6,
       0,
       "CLIP"
     ],
@@ -649,7 +879,7 @@
       2,
       2,
       0,
-      5,
+      7,
       0,
       "CLIP"
     ],
@@ -657,55 +887,111 @@
       3,
       4,
       0,
-      7,
-      1,
-      "CONDITIONING"
+      8,
+      0,
+      "CLIP_VISION"
     ],
     [
       4,
       5,
       0,
-      7,
-      2,
-      "CONDITIONING"
+      8,
+      1,
+      "IMAGE"
     ],
     [
       5,
       6,
       0,
-      7,
-      3,
-      "LATENT"
+      9,
+      0,
+      "CONDITIONING"
     ],
     [
       6,
+      7,
+      0,
+      9,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      7,
+      3,
+      0,
+      9,
+      2,
+      "VAE"
+    ],
+    [
+      8,
+      8,
+      0,
+      9,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      9,
+      5,
+      0,
+      9,
+      4,
+      "IMAGE"
+    ],
+    [
+      10,
       1,
       0,
-      7,
+      10,
       0,
       "MODEL"
     ],
     [
-      7,
-      7,
+      11,
+      9,
       0,
-      8,
+      10,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      12,
+      9,
+      1,
+      10,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      13,
+      9,
+      2,
+      10,
+      3,
+      "LATENT"
+    ],
+    [
+      14,
+      10,
+      0,
+      11,
       0,
       "LATENT"
     ],
     [
-      8,
+      15,
       3,
       0,
-      8,
+      11,
       1,
       "VAE"
     ],
     [
-      9,
-      8,
+      16,
+      11,
       0,
-      9,
+      12,
       0,
       "IMAGE"
     ]
@@ -716,19 +1002,24 @@
   "version": 0.4,
   "models": [
     {
-      "name": "hunyuan_video_t2v_720p_bf16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/diffusion_models/hunyuan_video_t2v_720p_bf16.safetensors",
+      "name": "wan2.2_i2v_480p_14b.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_480p_14b.safetensors",
       "directory": "diffusion_models"
     },
     {
-      "name": "llava_llama3_fp16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/text_encoders/llava_llama3_fp16.safetensors",
+      "name": "umt5_xxl_fp16.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors",
       "directory": "text_encoders"
     },
     {
-      "name": "hunyuan_video_vae_bf16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/vae/hunyuan_video_vae_bf16.safetensors",
+      "name": "wan_2.1_vae.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
       "directory": "vae"
+    },
+    {
+      "name": "clip_vision_h.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors",
+      "directory": "clip_vision"
     }
   ]
 }

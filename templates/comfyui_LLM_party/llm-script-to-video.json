@@ -1,0 +1,820 @@
+{
+  "id": "a342d51a-3bfd-451b-b8ac-194b5726e635",
+  "revision": 0,
+  "last_node_id": 22,
+  "last_link_id": 8,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LLM_api_loader",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        400,
+        150
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model_name",
+          "localized_name": "model_name",
+          "name": "model_name",
+          "type": "STRING",
+          "widget": {
+            "name": "model_name"
+          },
+          "link": null
+        },
+        {
+          "label": "base_url",
+          "localized_name": "base_url",
+          "name": "base_url",
+          "type": "STRING",
+          "widget": {
+            "name": "base_url"
+          },
+          "link": null
+        },
+        {
+          "label": "api_key",
+          "localized_name": "api_key",
+          "name": "api_key",
+          "type": "STRING",
+          "widget": {
+            "name": "api_key"
+          },
+          "link": null
+        },
+        {
+          "label": "is_ollama",
+          "localized_name": "is_ollama",
+          "name": "is_ollama",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "is_ollama"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "CUSTOM",
+          "links": [
+            1,
+            2,
+            3
+          ],
+          "slot_index": 0,
+          "label": "model",
+          "localized_name": "model"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LLM_api_loader"
+      },
+      "title": "LLM Loader (set your provider)",
+      "widgets_values": [
+        "gpt-4o-mini",
+        "https://api.openai.com/v1",
+        "",
+        false
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LLM",
+      "pos": [
+        0,
+        200
+      ],
+      "size": [
+        450,
+        400
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "system_prompt",
+          "localized_name": "system_prompt",
+          "name": "system_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "system_prompt"
+          },
+          "link": null
+        },
+        {
+          "label": "user_prompt",
+          "localized_name": "user_prompt",
+          "name": "user_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "user_prompt"
+          },
+          "link": null
+        },
+        {
+          "name": "model",
+          "type": "CUSTOM",
+          "link": 1,
+          "label": "model",
+          "localized_name": "model"
+        },
+        {
+          "label": "temperature",
+          "localized_name": "temperature",
+          "name": "temperature",
+          "type": "FLOAT",
+          "widget": {
+            "name": "temperature"
+          },
+          "link": null
+        },
+        {
+          "label": "is_memory",
+          "localized_name": "is_memory",
+          "name": "is_memory",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_memory"
+          },
+          "link": null
+        },
+        {
+          "label": "is_tools_in_sys_prompt",
+          "localized_name": "is_tools_in_sys_prompt",
+          "name": "is_tools_in_sys_prompt",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_tools_in_sys_prompt"
+          },
+          "link": null
+        },
+        {
+          "label": "is_locked",
+          "localized_name": "is_locked",
+          "name": "is_locked",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_locked"
+          },
+          "link": null
+        },
+        {
+          "label": "main_brain",
+          "localized_name": "main_brain",
+          "name": "main_brain",
+          "type": "COMBO",
+          "widget": {
+            "name": "main_brain"
+          },
+          "link": null
+        },
+        {
+          "label": "max_length",
+          "localized_name": "max_length",
+          "name": "max_length",
+          "type": "INT",
+          "widget": {
+            "name": "max_length"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "assistant_response",
+          "type": "STRING",
+          "links": [
+            4,
+            5,
+            6
+          ],
+          "slot_index": 0,
+          "label": "assistant_response",
+          "localized_name": "assistant_response"
+        },
+        {
+          "name": "history",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1,
+          "label": "history",
+          "localized_name": "history"
+        },
+        {
+          "name": "tool",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 2,
+          "label": "tool",
+          "localized_name": "tool"
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null,
+          "slot_index": 3,
+          "label": "image",
+          "localized_name": "image"
+        },
+        {
+          "name": "reasoning_content",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 4,
+          "label": "reasoning_content",
+          "localized_name": "reasoning_content"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LLM"
+      },
+      "title": "Stage 1: Generate Script",
+      "widgets_values": [
+        "You are a professional screenwriter. Write a short cinematic script (3 scenes) based on the user's input. Include vivid scene descriptions, character actions, and dialogue. Keep it concise.",
+        "A warrior princess must retrieve a stolen artifact from a dragon's lair",
+        0.7,
+        "disable",
+        "disable",
+        "disable",
+        "enable",
+        4096,
+        "",
+        100,
+        "",
+        true,
+        false
+      ]
+    },
+    {
+      "id": 3,
+      "type": "LLM",
+      "pos": [
+        500,
+        200
+      ],
+      "size": [
+        450,
+        400
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "system_prompt",
+          "localized_name": "system_prompt",
+          "name": "system_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "system_prompt"
+          },
+          "link": null
+        },
+        {
+          "label": "user_prompt",
+          "localized_name": "user_prompt",
+          "name": "user_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "user_prompt"
+          },
+          "link": null
+        },
+        {
+          "name": "model",
+          "type": "CUSTOM",
+          "link": 2,
+          "label": "model",
+          "localized_name": "model"
+        },
+        {
+          "label": "temperature",
+          "localized_name": "temperature",
+          "name": "temperature",
+          "type": "FLOAT",
+          "widget": {
+            "name": "temperature"
+          },
+          "link": null
+        },
+        {
+          "label": "is_memory",
+          "localized_name": "is_memory",
+          "name": "is_memory",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_memory"
+          },
+          "link": null
+        },
+        {
+          "label": "is_tools_in_sys_prompt",
+          "localized_name": "is_tools_in_sys_prompt",
+          "name": "is_tools_in_sys_prompt",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_tools_in_sys_prompt"
+          },
+          "link": null
+        },
+        {
+          "label": "is_locked",
+          "localized_name": "is_locked",
+          "name": "is_locked",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_locked"
+          },
+          "link": null
+        },
+        {
+          "label": "main_brain",
+          "localized_name": "main_brain",
+          "name": "main_brain",
+          "type": "COMBO",
+          "widget": {
+            "name": "main_brain"
+          },
+          "link": null
+        },
+        {
+          "label": "max_length",
+          "localized_name": "max_length",
+          "name": "max_length",
+          "type": "INT",
+          "widget": {
+            "name": "max_length"
+          },
+          "link": null
+        },
+        {
+          "name": "user_prompt_input",
+          "type": "STRING",
+          "link": 4,
+          "label": "user_prompt_input",
+          "localized_name": "user_prompt_input",
+          "widget": {
+            "name": "user_prompt_input"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "assistant_response",
+          "type": "STRING",
+          "links": [
+            7
+          ],
+          "slot_index": 0,
+          "label": "assistant_response",
+          "localized_name": "assistant_response"
+        },
+        {
+          "name": "history",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1,
+          "label": "history",
+          "localized_name": "history"
+        },
+        {
+          "name": "tool",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 2,
+          "label": "tool",
+          "localized_name": "tool"
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null,
+          "slot_index": 3,
+          "label": "image",
+          "localized_name": "image"
+        },
+        {
+          "name": "reasoning_content",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 4,
+          "label": "reasoning_content",
+          "localized_name": "reasoning_content"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LLM"
+      },
+      "title": "Stage 2: Extract Characters",
+      "widgets_values": [
+        "From the script below, extract the main character. Output ONLY a detailed visual description suitable for AI image generation: appearance, clothing, expression, pose. English only, single paragraph, no JSON.",
+        "",
+        0.7,
+        "disable",
+        "disable",
+        "disable",
+        "enable",
+        2048,
+        "",
+        100,
+        "",
+        true,
+        false
+      ]
+    },
+    {
+      "id": 4,
+      "type": "LLM",
+      "pos": [
+        1000,
+        200
+      ],
+      "size": [
+        450,
+        400
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "system_prompt",
+          "localized_name": "system_prompt",
+          "name": "system_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "system_prompt"
+          },
+          "link": null
+        },
+        {
+          "label": "user_prompt",
+          "localized_name": "user_prompt",
+          "name": "user_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "user_prompt"
+          },
+          "link": null
+        },
+        {
+          "name": "model",
+          "type": "CUSTOM",
+          "link": 3,
+          "label": "model",
+          "localized_name": "model"
+        },
+        {
+          "label": "temperature",
+          "localized_name": "temperature",
+          "name": "temperature",
+          "type": "FLOAT",
+          "widget": {
+            "name": "temperature"
+          },
+          "link": null
+        },
+        {
+          "label": "is_memory",
+          "localized_name": "is_memory",
+          "name": "is_memory",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_memory"
+          },
+          "link": null
+        },
+        {
+          "label": "is_tools_in_sys_prompt",
+          "localized_name": "is_tools_in_sys_prompt",
+          "name": "is_tools_in_sys_prompt",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_tools_in_sys_prompt"
+          },
+          "link": null
+        },
+        {
+          "label": "is_locked",
+          "localized_name": "is_locked",
+          "name": "is_locked",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_locked"
+          },
+          "link": null
+        },
+        {
+          "label": "main_brain",
+          "localized_name": "main_brain",
+          "name": "main_brain",
+          "type": "COMBO",
+          "widget": {
+            "name": "main_brain"
+          },
+          "link": null
+        },
+        {
+          "label": "max_length",
+          "localized_name": "max_length",
+          "name": "max_length",
+          "type": "INT",
+          "widget": {
+            "name": "max_length"
+          },
+          "link": null
+        },
+        {
+          "name": "user_prompt_input",
+          "type": "STRING",
+          "link": 5,
+          "label": "user_prompt_input",
+          "localized_name": "user_prompt_input",
+          "widget": {
+            "name": "user_prompt_input"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "assistant_response",
+          "type": "STRING",
+          "links": [
+            8
+          ],
+          "slot_index": 0,
+          "label": "assistant_response",
+          "localized_name": "assistant_response"
+        },
+        {
+          "name": "history",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1,
+          "label": "history",
+          "localized_name": "history"
+        },
+        {
+          "name": "tool",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 2,
+          "label": "tool",
+          "localized_name": "tool"
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null,
+          "slot_index": 3,
+          "label": "image",
+          "localized_name": "image"
+        },
+        {
+          "name": "reasoning_content",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 4,
+          "label": "reasoning_content",
+          "localized_name": "reasoning_content"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LLM"
+      },
+      "title": "Stage 3: Generate Storyboard",
+      "widgets_values": [
+        "From the script below, create exactly 3 video shots. For each shot, output ONE line with a detailed video generation prompt describing scene action, camera movement, lighting, mood. English only, one line per shot, no numbering.",
+        "",
+        0.7,
+        "disable",
+        "disable",
+        "disable",
+        "enable",
+        2048,
+        "",
+        100,
+        "",
+        true,
+        false
+      ]
+    },
+    {
+      "id": 20,
+      "type": "show_text_party",
+      "pos": [
+        0,
+        680
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 6,
+          "label": "text",
+          "localized_name": "text",
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0,
+          "label": "text",
+          "localized_name": "text"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "show_text_party"
+      },
+      "title": "Script Output",
+      "widgets_values": []
+    },
+    {
+      "id": 21,
+      "type": "show_text_party",
+      "pos": [
+        500,
+        680
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 7,
+          "label": "text",
+          "localized_name": "text",
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0,
+          "label": "text",
+          "localized_name": "text"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "show_text_party"
+      },
+      "title": "Character Description",
+      "widgets_values": []
+    },
+    {
+      "id": 22,
+      "type": "show_text_party",
+      "pos": [
+        1000,
+        680
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 8,
+          "label": "text",
+          "localized_name": "text",
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0,
+          "label": "text",
+          "localized_name": "text"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "show_text_party"
+      },
+      "title": "Storyboard Shots",
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      2,
+      "CUSTOM"
+    ],
+    [
+      2,
+      1,
+      0,
+      3,
+      2,
+      "CUSTOM"
+    ],
+    [
+      3,
+      1,
+      0,
+      4,
+      2,
+      "CUSTOM"
+    ],
+    [
+      4,
+      2,
+      0,
+      3,
+      9,
+      "STRING"
+    ],
+    [
+      5,
+      2,
+      0,
+      4,
+      9,
+      "STRING"
+    ],
+    [
+      6,
+      2,
+      0,
+      20,
+      0,
+      "STRING"
+    ],
+    [
+      7,
+      3,
+      0,
+      21,
+      0,
+      "STRING"
+    ],
+    [
+      8,
+      4,
+      0,
+      22,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "LLM Script Pipeline (connect outputs to FLUX + Wan2.2 for full video)",
+      "bounding": [
+        -30,
+        -50,
+        1500,
+        920
+      ],
+      "color": "#88A",
+      "font_size": 24
+    }
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

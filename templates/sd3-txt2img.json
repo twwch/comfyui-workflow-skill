@@ -1,31 +1,41 @@
 {
-  "id": "ddb89cfd-0edb-47f0-831a-8f5e09ee048f",
+  "id": "0ee9e4d5-e10c-424a-9a86-c0af87f904cd",
   "revision": 0,
-  "last_node_id": 7,
-  "last_link_id": 6,
+  "last_node_id": 9,
+  "last_link_id": 9,
   "nodes": [
     {
       "id": 1,
-      "type": "CheckpointLoaderSimple",
+      "type": "UNETLoader",
       "pos": [
         0,
         0
       ],
       "size": [
-        315,
-        98
+        350,
+        82
       ],
       "flags": {},
       "order": 0,
       "mode": 0,
       "inputs": [
         {
-          "label": "ckpt_name",
-          "localized_name": "ckpt_name",
-          "name": "ckpt_name",
+          "label": "unet_name",
+          "localized_name": "unet_name",
+          "name": "unet_name",
           "type": "COMBO",
           "widget": {
-            "name": "ckpt_name"
+            "name": "unet_name"
+          },
+          "link": null
+        },
+        {
+          "label": "weight_dtype",
+          "localized_name": "weight_dtype",
+          "name": "weight_dtype",
+          "type": "COMBO",
+          "widget": {
+            "name": "weight_dtype"
           },
           "link": null
         }
@@ -35,12 +45,69 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            4
+            5
           ],
           "slot_index": 0,
           "label": "MODEL",
           "localized_name": "MODEL"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "title": "Load SD3 Model",
+      "widgets_values": [
+        "sd3_medium_incl_clips_t5xxlfp8.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "TripleCLIPLoader",
+      "pos": [
+        0,
+        130
+      ],
+      "size": [
+        400,
+        120
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "clip_name1",
+          "localized_name": "clip_name1",
+          "name": "clip_name1",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name1"
+          },
+          "link": null
         },
+        {
+          "label": "clip_name2",
+          "localized_name": "clip_name2",
+          "name": "clip_name2",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name2"
+          },
+          "link": null
+        },
+        {
+          "label": "clip_name3",
+          "localized_name": "clip_name3",
+          "name": "clip_name3",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name3"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
         {
           "name": "CLIP",
           "type": "CLIP",
@@ -48,42 +115,80 @@
             1,
             2
           ],
-          "slot_index": 1,
+          "slot_index": 0,
           "label": "CLIP",
           "localized_name": "CLIP"
-        },
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TripleCLIPLoader"
+      },
+      "title": "Load Triple CLIP (SD3)",
+      "widgets_values": [
+        "clip_l.safetensors",
+        "clip_g.safetensors",
+        "t5xxl_fp16.safetensors"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        0,
+        300
+      ],
+      "size": [
+        290,
+        82
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "vae_name",
+          "localized_name": "vae_name",
+          "name": "vae_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "vae_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
         {
           "name": "VAE",
           "type": "VAE",
           "links": [
-            6
+            8
           ],
-          "slot_index": 2,
+          "slot_index": 0,
           "label": "VAE",
           "localized_name": "VAE"
         }
       ],
-      "title": "Load Checkpoint",
       "properties": {
-        "Node name for S&R": "CheckpointLoaderSimple"
+        "Node name for S&R": "VAELoader"
       },
+      "title": "Load VAE",
       "widgets_values": [
-        "v1-5-pruned-emaonly.safetensors"
+        "sd3_vae.safetensors"
       ]
     },
     {
-      "id": 2,
-      "type": "CLIPTextEncode",
+      "id": 4,
+      "type": "CLIPTextEncodeSD3",
       "pos": [
-        400,
+        450,
         0
       ],
       "size": [
-        280,
-        120
+        350,
+        200
       ],
       "flags": {},
-      "order": 1,
+      "order": 3,
       "mode": 0,
       "inputs": [
         {
@@ -94,12 +199,42 @@
           "localized_name": "clip"
         },
         {
-          "label": "text",
-          "localized_name": "text",
-          "name": "text",
+          "label": "clip_l",
+          "localized_name": "clip_l",
+          "name": "clip_l",
           "type": "STRING",
           "widget": {
-            "name": "text"
+            "name": "clip_l"
+          },
+          "link": null
+        },
+        {
+          "label": "clip_g",
+          "localized_name": "clip_g",
+          "name": "clip_g",
+          "type": "STRING",
+          "widget": {
+            "name": "clip_g"
+          },
+          "link": null
+        },
+        {
+          "label": "t5xxl",
+          "localized_name": "t5xxl",
+          "name": "t5xxl",
+          "type": "STRING",
+          "widget": {
+            "name": "t5xxl"
+          },
+          "link": null
+        },
+        {
+          "label": "empty_padding",
+          "localized_name": "empty_padding",
+          "name": "empty_padding",
+          "type": "COMBO",
+          "widget": {
+            "name": "empty_padding"
           },
           "link": null
         }
@@ -116,29 +251,32 @@
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "Positive Prompt",
       "properties": {
-        "Node name for S&R": "CLIPTextEncode"
+        "Node name for S&R": "CLIPTextEncodeSD3"
       },
+      "title": "Positive Prompt",
       "widgets_values": [
-        "masterpiece, best quality, 1girl, beautiful scenery"
+        "beautiful landscape",
+        "a stunning mountain landscape with a crystal clear lake, golden hour, dramatic clouds, photorealistic",
+        "a stunning mountain landscape with a crystal clear lake at golden hour, dramatic volumetric clouds, rays of sunlight, photorealistic, masterpiece, 8k uhd",
+        "none"
       ],
       "color": "#232",
       "bgcolor": "#353"
     },
     {
-      "id": 3,
-      "type": "CLIPTextEncode",
+      "id": 5,
+      "type": "CLIPTextEncodeSD3",
       "pos": [
-        400,
-        180
+        450,
+        250
       ],
       "size": [
-        280,
-        120
+        350,
+        200
       ],
       "flags": {},
-      "order": 2,
+      "order": 4,
       "mode": 0,
       "inputs": [
         {
@@ -149,12 +287,42 @@
           "localized_name": "clip"
         },
         {
-          "label": "text",
-          "localized_name": "text",
-          "name": "text",
+          "label": "clip_l",
+          "localized_name": "clip_l",
+          "name": "clip_l",
           "type": "STRING",
           "widget": {
-            "name": "text"
+            "name": "clip_l"
+          },
+          "link": null
+        },
+        {
+          "label": "clip_g",
+          "localized_name": "clip_g",
+          "name": "clip_g",
+          "type": "STRING",
+          "widget": {
+            "name": "clip_g"
+          },
+          "link": null
+        },
+        {
+          "label": "t5xxl",
+          "localized_name": "t5xxl",
+          "name": "t5xxl",
+          "type": "STRING",
+          "widget": {
+            "name": "t5xxl"
+          },
+          "link": null
+        },
+        {
+          "label": "empty_padding",
+          "localized_name": "empty_padding",
+          "name": "empty_padding",
+          "type": "COMBO",
+          "widget": {
+            "name": "empty_padding"
           },
           "link": null
         }
@@ -164,36 +332,39 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            5
+            4
           ],
           "slot_index": 0,
           "label": "CONDITIONING",
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "Negative Prompt",
       "properties": {
-        "Node name for S&R": "CLIPTextEncode"
+        "Node name for S&R": "CLIPTextEncodeSD3"
       },
+      "title": "Negative Prompt",
       "widgets_values": [
-        "worst quality, low quality, blurry, deformed"
+        "ugly, blurry",
+        "worst quality, low quality, blurry, deformed, watermark",
+        "worst quality, low quality, blurry, deformed, ugly, watermark, text, oversaturated",
+        "none"
       ],
       "color": "#322",
       "bgcolor": "#533"
     },
     {
-      "id": 4,
-      "type": "EmptyLatentImage",
+      "id": 6,
+      "type": "EmptySD3LatentImage",
       "pos": [
-        400,
-        360
+        450,
+        500
       ],
       "size": [
         225,
         106
       ],
       "flags": {},
-      "order": 3,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
@@ -232,7 +403,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            7
+            6
           ],
           "slot_index": 0,
           "label": "LATENT",
@@ -240,19 +411,19 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "EmptyLatentImage"
+        "Node name for S&R": "EmptySD3LatentImage"
       },
       "widgets_values": [
-        512,
-        512,
+        1024,
+        1024,
         1
       ]
     },
     {
-      "id": 5,
+      "id": 7,
       "type": "KSampler",
       "pos": [
-        750,
+        850,
         0
       ],
       "size": [
@@ -260,13 +431,13 @@
         340
       ],
       "flags": {},
-      "order": 4,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 4,
+          "link": 5,
           "label": "model",
           "localized_name": "model"
         },
@@ -280,14 +451,14 @@
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 5,
+          "link": 4,
           "label": "negative",
           "localized_name": "negative"
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 7,
+          "link": 6,
           "label": "latent_image",
           "localized_name": "latent_image"
         },
@@ -367,7 +538,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            8
+            7
           ],
           "slot_index": 0,
           "label": "LATENT",
@@ -380,18 +551,18 @@
       "widgets_values": [
         0,
         "randomize",
-        20,
-        7,
-        "euler_ancestral",
-        "karras",
+        28,
+        4.5,
+        "dpmpp_2m",
+        "sgm_uniform",
         1
       ]
     },
     {
-      "id": 6,
+      "id": 8,
       "type": "VAEDecode",
       "pos": [
-        1100,
+        1200,
         0
       ],
       "size": [
@@ -399,20 +570,20 @@
         72
       ],
       "flags": {},
-      "order": 5,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 8,
+          "link": 7,
           "label": "samples",
           "localized_name": "samples"
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 6,
+          "link": 8,
           "label": "vae",
           "localized_name": "vae"
         }
@@ -434,18 +605,18 @@
       }
     },
     {
-      "id": 7,
+      "id": 9,
       "type": "SaveImage",
       "pos": [
-        1100,
-        130
+        1200,
+        120
       ],
       "size": [
         320,
         270
       ],
       "flags": {},
-      "order": 6,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
@@ -470,81 +641,82 @@
       "properties": {
         "Node name for S&R": "SaveImage"
       },
+      "title": "Save Image",
       "widgets_values": [
-        "ComfyUI"
+        "ComfyUI_SD3"
       ]
     }
   ],
   "links": [
     [
       1,
-      1,
-      1,
       2,
+      0,
+      4,
       0,
       "CLIP"
     ],
     [
       2,
-      1,
-      1,
-      3,
-      0,
-      "CLIP"
-    ],
-    [
-      3,
       2,
       0,
       5,
+      0,
+      "CLIP"
+    ],
+    [
+      3,
+      4,
+      0,
+      7,
       1,
       "CONDITIONING"
     ],
     [
       4,
+      5,
+      0,
+      7,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      5,
       1,
       0,
-      5,
+      7,
       0,
       "MODEL"
     ],
     [
-      5,
-      3,
+      6,
+      6,
       0,
-      5,
-      2,
-      "CONDITIONING"
-    ],
-    [
-      6,
-      1,
-      2,
-      6,
-      1,
-      "VAE"
+      7,
+      3,
+      "LATENT"
     ],
     [
       7,
-      4,
+      7,
       0,
-      5,
-      3,
+      8,
+      0,
       "LATENT"
     ],
     [
       8,
-      5,
+      3,
       0,
-      6,
-      0,
-      "LATENT"
+      8,
+      1,
+      "VAE"
     ],
     [
       9,
-      6,
+      8,
       0,
-      7,
+      9,
       0,
       "IMAGE"
     ]
@@ -555,9 +727,29 @@
   "version": 0.4,
   "models": [
     {
-      "name": "v1-5-pruned-emaonly.safetensors",
-      "url": "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors",
+      "name": "sd3_medium_incl_clips_t5xxlfp8.safetensors",
+      "url": "https://huggingface.co/stabilityai/stable-diffusion-3-medium/resolve/main/sd3_medium_incl_clips_t5xxlfp8.safetensors",
       "directory": "checkpoints"
+    },
+    {
+      "name": "clip_l.safetensors",
+      "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors",
+      "directory": "text_encoders"
+    },
+    {
+      "name": "clip_g.safetensors",
+      "url": "https://huggingface.co/stabilityai/stable-diffusion-3-medium/resolve/main/text_encoders/clip_g.safetensors",
+      "directory": "text_encoders"
+    },
+    {
+      "name": "t5xxl_fp16.safetensors",
+      "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors",
+      "directory": "text_encoders"
+    },
+    {
+      "name": "sd3_vae.safetensors",
+      "url": "https://huggingface.co/stabilityai/stable-diffusion-3-medium/resolve/main/sd3_vae.safetensors",
+      "directory": "vae"
     }
   ]
 }

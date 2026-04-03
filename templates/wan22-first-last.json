@@ -1,8 +1,8 @@
 {
-  "id": "1ae853c7-5228-450d-bd4e-866082cfc509",
+  "id": "fa18d1be-81eb-4630-a7c0-85b65f64542f",
   "revision": 0,
-  "last_node_id": 9,
-  "last_link_id": 10,
+  "last_node_id": 14,
+  "last_link_id": 20,
   "nodes": [
     {
       "id": 1,
@@ -45,19 +45,19 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            6
+            14
           ],
           "slot_index": 0,
           "label": "MODEL",
           "localized_name": "MODEL"
         }
       ],
-      "title": "Load HunyuanVideo Model",
       "properties": {
         "Node name for S&R": "UNETLoader"
       },
+      "title": "Load Wan I2V Model",
       "widgets_values": [
-        "hunyuan_video_t2v_720p_bf16.safetensors",
+        "wan2.2_i2v_480p_14b.safetensors",
         "default"
       ]
     },
@@ -120,12 +120,12 @@
           "localized_name": "CLIP"
         }
       ],
-      "title": "Load CLIP",
       "properties": {
         "Node name for S&R": "CLIPLoader"
       },
+      "title": "Wan CLIP",
       "widgets_values": [
-        "llava_llama3_fp16.safetensors",
+        "umt5_xxl_fp16.safetensors",
         "wan",
         "default"
       ]
@@ -161,26 +161,204 @@
           "name": "VAE",
           "type": "VAE",
           "links": [
-            8
+            9,
+            19
           ],
           "slot_index": 0,
           "label": "VAE",
           "localized_name": "VAE"
         }
       ],
-      "title": "Load VAE",
       "properties": {
         "Node name for S&R": "VAELoader"
       },
+      "title": "Wan VAE",
       "widgets_values": [
-        "hunyuan_video_vae_bf16.safetensors"
+        "wan_2.1_vae.safetensors"
       ]
     },
     {
       "id": 4,
+      "type": "CLIPVisionLoader",
+      "pos": [
+        0,
+        430
+      ],
+      "size": [
+        290,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "clip_name",
+          "localized_name": "clip_name",
+          "name": "clip_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP_VISION",
+          "type": "CLIP_VISION",
+          "links": [
+            3,
+            5
+          ],
+          "slot_index": 0,
+          "label": "CLIP_VISION",
+          "localized_name": "CLIP_VISION"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPVisionLoader"
+      },
+      "title": "CLIP Vision",
+      "widgets_values": [
+        "clip_vision_h.safetensors"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        560
+      ],
+      "size": [
+        280,
+        310
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "label": "upload",
+          "localized_name": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            4,
+            12
+          ],
+          "slot_index": 0,
+          "label": "IMAGE",
+          "localized_name": "IMAGE"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1,
+          "label": "MASK",
+          "localized_name": "MASK"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "title": "Start Frame",
+      "widgets_values": [
+        "start_frame.png"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        920
+      ],
+      "size": [
+        280,
+        310
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "label": "upload",
+          "localized_name": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            6,
+            13
+          ],
+          "slot_index": 0,
+          "label": "IMAGE",
+          "localized_name": "IMAGE"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1,
+          "label": "MASK",
+          "localized_name": "MASK"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "title": "End Frame",
+      "widgets_values": [
+        "end_frame.png"
+      ]
+    },
+    {
+      "id": 6,
       "type": "CLIPTextEncode",
       "pos": [
-        400,
+        380,
         0
       ],
       "size": [
@@ -188,7 +366,7 @@
         120
       ],
       "flags": {},
-      "order": 3,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
@@ -214,28 +392,28 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            3
+            7
           ],
           "slot_index": 0,
           "label": "CONDITIONING",
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "Positive Prompt",
       "properties": {
         "Node name for S&R": "CLIPTextEncode"
       },
+      "title": "Positive Prompt",
       "widgets_values": [
-        "a person walking through a beautiful forest, sunlight filtering through trees, cinematic quality, smooth motion"
+        "smooth transition between two scenes, cinematic, high quality, fluid motion"
       ],
       "color": "#232",
       "bgcolor": "#353"
     },
     {
-      "id": 5,
+      "id": 7,
       "type": "CLIPTextEncode",
       "pos": [
-        400,
+        380,
         170
       ],
       "size": [
@@ -243,7 +421,7 @@
         120
       ],
       "flags": {},
-      "order": 4,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
@@ -269,38 +447,211 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            4
+            8
           ],
           "slot_index": 0,
           "label": "CONDITIONING",
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "Negative Prompt",
       "properties": {
         "Node name for S&R": "CLIPTextEncode"
       },
+      "title": "Negative Prompt",
       "widgets_values": [
-        "worst quality, blurry, distorted"
+        "worst quality, blurry, distorted, static, jittery"
       ],
       "color": "#322",
       "bgcolor": "#533"
     },
     {
-      "id": 6,
-      "type": "EmptyHunyuanLatentVideo",
+      "id": 8,
+      "type": "CLIPVisionEncode",
       "pos": [
-        400,
-        340
+        380,
+        560
       ],
       "size": [
-        225,
-        130
+        250,
+        100
       ],
       "flags": {},
-      "order": 5,
+      "order": 8,
       "mode": 0,
       "inputs": [
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 3,
+          "label": "clip_vision",
+          "localized_name": "clip_vision"
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 4,
+          "label": "image",
+          "localized_name": "image"
+        },
+        {
+          "label": "crop",
+          "localized_name": "crop",
+          "name": "crop",
+          "type": "COMBO",
+          "widget": {
+            "name": "crop"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP_VISION_OUTPUT",
+          "type": "CLIP_VISION_OUTPUT",
+          "links": [
+            10
+          ],
+          "slot_index": 0,
+          "label": "CLIP_VISION_OUTPUT",
+          "localized_name": "CLIP_VISION_OUTPUT"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPVisionEncode"
+      },
+      "title": "Encode Start Vision",
+      "widgets_values": [
+        "center"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "CLIPVisionEncode",
+      "pos": [
+        380,
+        710
+      ],
+      "size": [
+        250,
+        100
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip_vision",
+          "type": "CLIP_VISION",
+          "link": 5,
+          "label": "clip_vision",
+          "localized_name": "clip_vision"
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 6,
+          "label": "image",
+          "localized_name": "image"
+        },
+        {
+          "label": "crop",
+          "localized_name": "crop",
+          "name": "crop",
+          "type": "COMBO",
+          "widget": {
+            "name": "crop"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CLIP_VISION_OUTPUT",
+          "type": "CLIP_VISION_OUTPUT",
+          "links": [
+            11
+          ],
+          "slot_index": 0,
+          "label": "CLIP_VISION_OUTPUT",
+          "localized_name": "CLIP_VISION_OUTPUT"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPVisionEncode"
+      },
+      "title": "Encode End Vision",
+      "widgets_values": [
+        "center"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "WanFirstLastFrameToVideo",
+      "pos": [
+        700,
+        0
+      ],
+      "size": [
+        260,
+        300
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 7,
+          "label": "positive",
+          "localized_name": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 8,
+          "label": "negative",
+          "localized_name": "negative"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 9,
+          "label": "vae",
+          "localized_name": "vae"
+        },
+        {
+          "name": "clip_vision_start_image",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 10,
+          "shape": 7,
+          "label": "clip_vision_start_image",
+          "localized_name": "clip_vision_start_image"
+        },
+        {
+          "name": "clip_vision_end_image",
+          "type": "CLIP_VISION_OUTPUT",
+          "link": 11,
+          "shape": 7,
+          "label": "clip_vision_end_image",
+          "localized_name": "clip_vision_end_image"
+        },
+        {
+          "name": "start_image",
+          "type": "IMAGE",
+          "link": 12,
+          "shape": 7,
+          "label": "start_image",
+          "localized_name": "start_image"
+        },
+        {
+          "name": "end_image",
+          "type": "IMAGE",
+          "link": 13,
+          "shape": 7,
+          "label": "end_image",
+          "localized_name": "end_image"
+        },
         {
           "label": "width",
           "localized_name": "width",
@@ -344,32 +695,52 @@
       ],
       "outputs": [
         {
-          "name": "LATENT",
-          "type": "LATENT",
+          "name": "positive",
+          "type": "CONDITIONING",
           "links": [
-            5
+            15
           ],
           "slot_index": 0,
-          "label": "LATENT",
-          "localized_name": "LATENT"
+          "label": "positive",
+          "localized_name": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            16
+          ],
+          "slot_index": 1,
+          "label": "negative",
+          "localized_name": "negative"
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            17
+          ],
+          "slot_index": 2,
+          "label": "latent",
+          "localized_name": "latent"
         }
       ],
-      "title": "Empty HunyuanVideo Latent",
       "properties": {
-        "Node name for S&R": "EmptyHunyuanLatentVideo"
+        "Node name for S&R": "WanFirstLastFrameToVideo"
       },
+      "title": "Wan First-Last Frame to Video",
       "widgets_values": [
-        848,
+        832,
         480,
-        25,
+        81,
         1
       ]
     },
     {
-      "id": 7,
+      "id": 12,
       "type": "KSampler",
       "pos": [
-        750,
+        1050,
         0
       ],
       "size": [
@@ -377,34 +748,34 @@
         340
       ],
       "flags": {},
-      "order": 6,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 6,
+          "link": 14,
           "label": "model",
           "localized_name": "model"
         },
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 3,
+          "link": 15,
           "label": "positive",
           "localized_name": "positive"
         },
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 4,
+          "link": 16,
           "label": "negative",
           "localized_name": "negative"
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 5,
+          "link": 17,
           "label": "latent_image",
           "localized_name": "latent_image"
         },
@@ -484,7 +855,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            7
+            18
           ],
           "slot_index": 0,
           "label": "LATENT",
@@ -497,7 +868,7 @@
       "widgets_values": [
         0,
         "randomize",
-        30,
+        25,
         6,
         "euler",
         "normal",
@@ -505,10 +876,10 @@
       ]
     },
     {
-      "id": 8,
+      "id": 13,
       "type": "VAEDecode",
       "pos": [
-        1100,
+        1400,
         0
       ],
       "size": [
@@ -516,20 +887,20 @@
         72
       ],
       "flags": {},
-      "order": 7,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 7,
+          "link": 18,
           "label": "samples",
           "localized_name": "samples"
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 8,
+          "link": 19,
           "label": "vae",
           "localized_name": "vae"
         }
@@ -539,7 +910,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            9
+            20
           ],
           "slot_index": 0,
           "label": "IMAGE",
@@ -551,24 +922,24 @@
       }
     },
     {
-      "id": 9,
+      "id": 14,
       "type": "SaveAnimatedWEBP",
       "pos": [
-        1100,
-        130
+        1400,
+        120
       ],
       "size": [
         320,
         270
       ],
       "flags": {},
-      "order": 8,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 9,
+          "link": 20,
           "label": "images",
           "localized_name": "images"
         },
@@ -627,9 +998,10 @@
       "properties": {
         "Node name for S&R": "SaveAnimatedWEBP"
       },
+      "title": "Save Video",
       "widgets_values": [
-        "ComfyUI_HunyuanVideo",
-        24,
+        "ComfyUI_Wan_FL",
+        16,
         false,
         85,
         "default"
@@ -641,7 +1013,7 @@
       1,
       2,
       0,
-      4,
+      6,
       0,
       "CLIP"
     ],
@@ -649,7 +1021,7 @@
       2,
       2,
       0,
-      5,
+      7,
       0,
       "CLIP"
     ],
@@ -657,55 +1029,143 @@
       3,
       4,
       0,
-      7,
-      1,
-      "CONDITIONING"
+      8,
+      0,
+      "CLIP_VISION"
     ],
     [
       4,
       5,
       0,
-      7,
-      2,
-      "CONDITIONING"
+      8,
+      1,
+      "IMAGE"
     ],
     [
       5,
-      6,
+      4,
       0,
-      7,
-      3,
-      "LATENT"
+      9,
+      0,
+      "CLIP_VISION"
     ],
     [
       6,
+      10,
+      0,
+      9,
+      1,
+      "IMAGE"
+    ],
+    [
+      7,
+      6,
+      0,
+      11,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      8,
+      7,
+      0,
+      11,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      9,
+      3,
+      0,
+      11,
+      2,
+      "VAE"
+    ],
+    [
+      10,
+      8,
+      0,
+      11,
+      3,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      11,
+      9,
+      0,
+      11,
+      4,
+      "CLIP_VISION_OUTPUT"
+    ],
+    [
+      12,
+      5,
+      0,
+      11,
+      5,
+      "IMAGE"
+    ],
+    [
+      13,
+      10,
+      0,
+      11,
+      6,
+      "IMAGE"
+    ],
+    [
+      14,
       1,
       0,
-      7,
+      12,
       0,
       "MODEL"
     ],
     [
-      7,
-      7,
+      15,
+      11,
       0,
-      8,
+      12,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      16,
+      11,
+      1,
+      12,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      17,
+      11,
+      2,
+      12,
+      3,
+      "LATENT"
+    ],
+    [
+      18,
+      12,
+      0,
+      13,
       0,
       "LATENT"
     ],
     [
-      8,
+      19,
       3,
       0,
-      8,
+      13,
       1,
       "VAE"
     ],
     [
-      9,
-      8,
+      20,
+      13,
       0,
-      9,
+      14,
       0,
       "IMAGE"
     ]
@@ -716,19 +1176,24 @@
   "version": 0.4,
   "models": [
     {
-      "name": "hunyuan_video_t2v_720p_bf16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/diffusion_models/hunyuan_video_t2v_720p_bf16.safetensors",
+      "name": "wan2.2_i2v_480p_14b.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_480p_14b.safetensors",
       "directory": "diffusion_models"
     },
     {
-      "name": "llava_llama3_fp16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/text_encoders/llava_llama3_fp16.safetensors",
+      "name": "umt5_xxl_fp16.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors",
       "directory": "text_encoders"
     },
     {
-      "name": "hunyuan_video_vae_bf16.safetensors",
-      "url": "https://huggingface.co/Comfy-Org/HunyuanVideo_repackaged/resolve/main/split_files/vae/hunyuan_video_vae_bf16.safetensors",
+      "name": "wan_2.1_vae.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
       "directory": "vae"
+    },
+    {
+      "name": "clip_vision_h.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors",
+      "directory": "clip_vision"
     }
   ]
 }

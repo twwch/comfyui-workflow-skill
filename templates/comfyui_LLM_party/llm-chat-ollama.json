@@ -1,0 +1,318 @@
+{
+  "id": "28dac46c-1f18-4963-9e1f-c03f475445d0",
+  "revision": 0,
+  "last_node_id": 3,
+  "last_link_id": 2,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LLM_api_loader",
+      "pos": [
+        0,
+        0
+      ],
+      "size": [
+        400,
+        150
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model_name",
+          "localized_name": "model_name",
+          "name": "model_name",
+          "type": "STRING",
+          "widget": {
+            "name": "model_name"
+          },
+          "link": null
+        },
+        {
+          "label": "base_url",
+          "localized_name": "base_url",
+          "name": "base_url",
+          "type": "STRING",
+          "widget": {
+            "name": "base_url"
+          },
+          "link": null
+        },
+        {
+          "label": "api_key",
+          "localized_name": "api_key",
+          "name": "api_key",
+          "type": "STRING",
+          "widget": {
+            "name": "api_key"
+          },
+          "link": null
+        },
+        {
+          "label": "is_ollama",
+          "localized_name": "is_ollama",
+          "name": "is_ollama",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "is_ollama"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "CUSTOM",
+          "links": [
+            1
+          ],
+          "slot_index": 0,
+          "label": "model",
+          "localized_name": "model"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LLM_api_loader"
+      },
+      "title": "Ollama LLM Loader",
+      "widgets_values": [
+        "qwen2.5:14b",
+        "http://127.0.0.1:11434/v1/",
+        "",
+        true
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LLM",
+      "pos": [
+        450,
+        0
+      ],
+      "size": [
+        450,
+        400
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "system_prompt",
+          "localized_name": "system_prompt",
+          "name": "system_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "system_prompt"
+          },
+          "link": null
+        },
+        {
+          "label": "user_prompt",
+          "localized_name": "user_prompt",
+          "name": "user_prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "user_prompt"
+          },
+          "link": null
+        },
+        {
+          "name": "model",
+          "type": "CUSTOM",
+          "link": 1,
+          "label": "model",
+          "localized_name": "model"
+        },
+        {
+          "label": "temperature",
+          "localized_name": "temperature",
+          "name": "temperature",
+          "type": "FLOAT",
+          "widget": {
+            "name": "temperature"
+          },
+          "link": null
+        },
+        {
+          "label": "is_memory",
+          "localized_name": "is_memory",
+          "name": "is_memory",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_memory"
+          },
+          "link": null
+        },
+        {
+          "label": "is_tools_in_sys_prompt",
+          "localized_name": "is_tools_in_sys_prompt",
+          "name": "is_tools_in_sys_prompt",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_tools_in_sys_prompt"
+          },
+          "link": null
+        },
+        {
+          "label": "is_locked",
+          "localized_name": "is_locked",
+          "name": "is_locked",
+          "type": "COMBO",
+          "widget": {
+            "name": "is_locked"
+          },
+          "link": null
+        },
+        {
+          "label": "main_brain",
+          "localized_name": "main_brain",
+          "name": "main_brain",
+          "type": "COMBO",
+          "widget": {
+            "name": "main_brain"
+          },
+          "link": null
+        },
+        {
+          "label": "max_length",
+          "localized_name": "max_length",
+          "name": "max_length",
+          "type": "INT",
+          "widget": {
+            "name": "max_length"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "assistant_response",
+          "type": "STRING",
+          "links": [
+            2
+          ],
+          "slot_index": 0,
+          "label": "assistant_response",
+          "localized_name": "assistant_response"
+        },
+        {
+          "name": "history",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 1,
+          "label": "history",
+          "localized_name": "history"
+        },
+        {
+          "name": "tool",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 2,
+          "label": "tool",
+          "localized_name": "tool"
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null,
+          "slot_index": 3,
+          "label": "image",
+          "localized_name": "image"
+        },
+        {
+          "name": "reasoning_content",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 4,
+          "label": "reasoning_content",
+          "localized_name": "reasoning_content"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LLM"
+      },
+      "title": "LLM Chat (Ollama)",
+      "widgets_values": [
+        "You are a helpful AI assistant.",
+        "Hello, tell me about yourself.",
+        0.7,
+        "enable",
+        "disable",
+        "disable",
+        "enable",
+        4096,
+        "",
+        100,
+        "",
+        true,
+        false
+      ]
+    },
+    {
+      "id": 3,
+      "type": "show_text_party",
+      "pos": [
+        950,
+        0
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 2,
+          "label": "text",
+          "localized_name": "text",
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0,
+          "label": "text",
+          "localized_name": "text"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "show_text_party"
+      },
+      "title": "Show Response",
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      2,
+      "CUSTOM"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

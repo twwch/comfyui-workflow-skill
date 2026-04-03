@@ -1,8 +1,8 @@
 {
-  "id": "d1248fbb-676f-43cf-945d-7fb9e3b888b7",
+  "id": "4a392abc-0aeb-46b7-9429-6e729976fad6",
   "revision": 0,
-  "last_node_id": 12,
-  "last_link_id": 12,
+  "last_node_id": 13,
+  "last_link_id": 14,
   "nodes": [
     {
       "id": 1,
@@ -45,18 +45,18 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            5,
-            7
+            3,
+            4
           ],
           "slot_index": 0,
           "label": "MODEL",
           "localized_name": "MODEL"
         }
       ],
-      "title": "Load FLUX Model",
       "properties": {
         "Node name for S&R": "UNETLoader"
       },
+      "title": "Load FLUX Model",
       "widgets_values": [
         "flux1-dev.safetensors",
         "default"
@@ -120,10 +120,10 @@
           "localized_name": "CLIP"
         }
       ],
-      "title": "Load CLIP (FLUX)",
       "properties": {
         "Node name for S&R": "DualCLIPLoader"
       },
+      "title": "Load CLIP (FLUX)",
       "widgets_values": [
         "clip_l.safetensors",
         "t5xxl_fp16.safetensors",
@@ -161,19 +161,84 @@
           "name": "VAE",
           "type": "VAE",
           "links": [
-            11
+            11,
+            14
           ],
           "slot_index": 0,
           "label": "VAE",
           "localized_name": "VAE"
         }
       ],
-      "title": "Load VAE",
       "properties": {
         "Node name for S&R": "VAELoader"
       },
+      "title": "Load VAE",
       "widgets_values": [
         "ae.safetensors"
+      ]
+    },
+    {
+      "id": 13,
+      "type": "LoadImage",
+      "pos": [
+        0,
+        430
+      ],
+      "size": [
+        280,
+        310
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "label": "upload",
+          "localized_name": "upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            13
+          ],
+          "slot_index": 0,
+          "label": "IMAGE",
+          "localized_name": "IMAGE"
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1,
+          "label": "MASK",
+          "localized_name": "MASK"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "title": "Load Input Image",
+      "widgets_values": [
+        "input.png"
       ]
     },
     {
@@ -188,7 +253,7 @@
         180
       ],
       "flags": {},
-      "order": 3,
+      "order": 4,
       "mode": 0,
       "inputs": [
         {
@@ -241,13 +306,13 @@
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "FLUX Text Encode",
       "properties": {
         "Node name for S&R": "CLIPTextEncodeFlux"
       },
+      "title": "FLUX Text Encode",
       "widgets_values": [
         "a beautiful woman in a garden",
-        "a beautiful woman standing in a lush garden with blooming flowers, soft natural lighting, photorealistic, high detail",
+        "a beautiful woman standing in a lush garden with blooming flowers, soft natural lighting, photorealistic",
         3.5
       ],
       "color": "#232",
@@ -255,48 +320,32 @@
     },
     {
       "id": 5,
-      "type": "EmptyLatentImage",
+      "type": "VAEEncode",
       "pos": [
         400,
-        240
+        430
       ],
       "size": [
-        225,
-        106
+        265,
+        72
       ],
       "flags": {},
-      "order": 4,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
-          "label": "width",
-          "localized_name": "width",
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": null
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 13,
+          "label": "pixels",
+          "localized_name": "pixels"
         },
         {
-          "label": "height",
-          "localized_name": "height",
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": null
-        },
-        {
-          "label": "batch_size",
-          "localized_name": "batch_size",
-          "name": "batch_size",
-          "type": "INT",
-          "widget": {
-            "name": "batch_size"
-          },
-          "link": null
+          "name": "vae",
+          "type": "VAE",
+          "link": 14,
+          "label": "vae",
+          "localized_name": "vae"
         }
       ],
       "outputs": [
@@ -304,7 +353,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            10
+            9
           ],
           "slot_index": 0,
           "label": "LATENT",
@@ -312,13 +361,9 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "EmptyLatentImage"
+        "Node name for S&R": "VAEEncode"
       },
-      "widgets_values": [
-        1024,
-        1024,
-        1
-      ]
+      "title": "Encode Image"
     },
     {
       "id": 6,
@@ -332,13 +377,13 @@
         72
       ],
       "flags": {},
-      "order": 5,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 5,
+          "link": 3,
           "label": "model",
           "localized_name": "model"
         },
@@ -355,7 +400,7 @@
           "name": "GUIDER",
           "type": "GUIDER",
           "links": [
-            3
+            5
           ],
           "slot_index": 0,
           "label": "GUIDER",
@@ -378,7 +423,7 @@
         58
       ],
       "flags": {},
-      "order": 6,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
@@ -397,7 +442,7 @@
           "name": "SAMPLER",
           "type": "SAMPLER",
           "links": [
-            4
+            6
           ],
           "slot_index": 0,
           "label": "SAMPLER",
@@ -423,13 +468,13 @@
         106
       ],
       "flags": {},
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 7,
+          "link": 4,
           "label": "model",
           "localized_name": "model"
         },
@@ -469,7 +514,7 @@
           "name": "SIGMAS",
           "type": "SIGMAS",
           "links": [
-            6
+            7
           ],
           "slot_index": 0,
           "label": "SIGMAS",
@@ -482,7 +527,7 @@
       "widgets_values": [
         "simple",
         20,
-        1
+        0.75
       ]
     },
     {
@@ -494,10 +539,10 @@
       ],
       "size": [
         225,
-        58
+        82
       ],
       "flags": {},
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -553,7 +598,7 @@
         160
       ],
       "flags": {},
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -566,28 +611,28 @@
         {
           "name": "guider",
           "type": "GUIDER",
-          "link": 3,
+          "link": 5,
           "label": "guider",
           "localized_name": "guider"
         },
         {
           "name": "sampler",
           "type": "SAMPLER",
-          "link": 4,
+          "link": 6,
           "label": "sampler",
           "localized_name": "sampler"
         },
         {
           "name": "sigmas",
           "type": "SIGMAS",
-          "link": 6,
+          "link": 7,
           "label": "sigmas",
           "localized_name": "sigmas"
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 10,
+          "link": 9,
           "label": "latent_image",
           "localized_name": "latent_image"
         }
@@ -597,7 +642,7 @@
           "name": "output",
           "type": "LATENT",
           "links": [
-            9
+            10
           ],
           "slot_index": 0,
           "label": "output",
@@ -628,13 +673,13 @@
         72
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 9,
+          "link": 10,
           "label": "samples",
           "localized_name": "samples"
         },
@@ -667,14 +712,14 @@
       "type": "SaveImage",
       "pos": [
         1400,
-        130
+        120
       ],
       "size": [
         320,
         270
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -699,8 +744,9 @@
       "properties": {
         "Node name for S&R": "SaveImage"
       },
+      "title": "Save Image",
       "widgets_values": [
-        "ComfyUI_FLUX"
+        "ComfyUI_FLUX_I2I"
       ]
     }
   ],
@@ -723,6 +769,22 @@
     ],
     [
       3,
+      1,
+      0,
+      6,
+      0,
+      "MODEL"
+    ],
+    [
+      4,
+      1,
+      0,
+      8,
+      0,
+      "MODEL"
+    ],
+    [
+      5,
       6,
       0,
       10,
@@ -730,7 +792,7 @@
       "GUIDER"
     ],
     [
-      4,
+      6,
       7,
       0,
       10,
@@ -738,28 +800,12 @@
       "SAMPLER"
     ],
     [
-      5,
-      1,
-      0,
-      6,
-      0,
-      "MODEL"
-    ],
-    [
-      6,
+      7,
       8,
       0,
       10,
       3,
       "SIGMAS"
-    ],
-    [
-      7,
-      1,
-      0,
-      8,
-      0,
-      "MODEL"
     ],
     [
       8,
@@ -771,18 +817,18 @@
     ],
     [
       9,
-      10,
-      0,
-      11,
-      0,
-      "LATENT"
-    ],
-    [
-      10,
       5,
       0,
       10,
       4,
+      "LATENT"
+    ],
+    [
+      10,
+      10,
+      0,
+      11,
+      0,
       "LATENT"
     ],
     [
@@ -800,6 +846,22 @@
       12,
       0,
       "IMAGE"
+    ],
+    [
+      13,
+      13,
+      0,
+      5,
+      0,
+      "IMAGE"
+    ],
+    [
+      14,
+      3,
+      0,
+      5,
+      1,
+      "VAE"
     ]
   ],
   "groups": [],

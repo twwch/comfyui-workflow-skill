@@ -1,8 +1,8 @@
 {
-  "id": "ddb89cfd-0edb-47f0-831a-8f5e09ee048f",
+  "id": "2998e47d-7ec6-4c41-ad7c-7d3faf0fcbd3",
   "revision": 0,
-  "last_node_id": 7,
-  "last_link_id": 6,
+  "last_node_id": 9,
+  "last_link_id": 11,
   "nodes": [
     {
       "id": 1,
@@ -35,7 +35,7 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            4
+            7
           ],
           "slot_index": 0,
           "label": "MODEL",
@@ -56,23 +56,23 @@
           "name": "VAE",
           "type": "VAE",
           "links": [
-            6
+            10
           ],
           "slot_index": 2,
           "label": "VAE",
           "localized_name": "VAE"
         }
       ],
-      "title": "Load Checkpoint",
       "properties": {
         "Node name for S&R": "CheckpointLoaderSimple"
       },
+      "title": "Load Stable Audio Model",
       "widgets_values": [
-        "v1-5-pruned-emaonly.safetensors"
+        "stable_audio_open_1.0.safetensors"
       ]
     },
     {
-      "id": 2,
+      "id": 3,
       "type": "CLIPTextEncode",
       "pos": [
         400,
@@ -116,22 +116,22 @@
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "Positive Prompt",
       "properties": {
         "Node name for S&R": "CLIPTextEncode"
       },
+      "title": "Positive Prompt",
       "widgets_values": [
-        "masterpiece, best quality, 1girl, beautiful scenery"
+        "ambient electronic music, soft pads, gentle melody, relaxing atmosphere"
       ],
       "color": "#232",
       "bgcolor": "#353"
     },
     {
-      "id": 3,
+      "id": 4,
       "type": "CLIPTextEncode",
       "pos": [
         400,
-        180
+        170
       ],
       "size": [
         280,
@@ -164,55 +164,126 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            5
+            4
           ],
           "slot_index": 0,
           "label": "CONDITIONING",
           "localized_name": "CONDITIONING"
         }
       ],
-      "title": "Negative Prompt",
       "properties": {
         "Node name for S&R": "CLIPTextEncode"
       },
+      "title": "Negative Prompt",
       "widgets_values": [
-        "worst quality, low quality, blurry, deformed"
+        "noise, distortion, low quality"
       ],
       "color": "#322",
       "bgcolor": "#533"
     },
     {
-      "id": 4,
-      "type": "EmptyLatentImage",
+      "id": 5,
+      "type": "ConditioningStableAudio",
       "pos": [
         400,
-        360
+        340
       ],
       "size": [
-        225,
-        106
+        280,
+        100
       ],
       "flags": {},
       "order": 3,
       "mode": 0,
       "inputs": [
         {
-          "label": "width",
-          "localized_name": "width",
-          "name": "width",
-          "type": "INT",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 3,
+          "label": "positive",
+          "localized_name": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 4,
+          "label": "negative",
+          "localized_name": "negative"
+        },
+        {
+          "label": "seconds_start",
+          "localized_name": "seconds_start",
+          "name": "seconds_start",
+          "type": "FLOAT",
           "widget": {
-            "name": "width"
+            "name": "seconds_start"
           },
           "link": null
         },
         {
-          "label": "height",
-          "localized_name": "height",
-          "name": "height",
-          "type": "INT",
+          "label": "seconds_total",
+          "localized_name": "seconds_total",
+          "name": "seconds_total",
+          "type": "FLOAT",
           "widget": {
-            "name": "height"
+            "name": "seconds_total"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            5
+          ],
+          "slot_index": 0,
+          "label": "positive",
+          "localized_name": "positive"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            6
+          ],
+          "slot_index": 1,
+          "label": "negative",
+          "localized_name": "negative"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConditioningStableAudio"
+      },
+      "title": "Stable Audio Conditioning",
+      "widgets_values": [
+        0.0,
+        47.0
+      ]
+    },
+    {
+      "id": 6,
+      "type": "EmptyLatentAudio",
+      "pos": [
+        400,
+        490
+      ],
+      "size": [
+        225,
+        82
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "seconds",
+          "localized_name": "seconds",
+          "name": "seconds",
+          "type": "FLOAT",
+          "widget": {
+            "name": "seconds"
           },
           "link": null
         },
@@ -232,7 +303,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            7
+            8
           ],
           "slot_index": 0,
           "label": "LATENT",
@@ -240,16 +311,16 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "EmptyLatentImage"
+        "Node name for S&R": "EmptyLatentAudio"
       },
+      "title": "Empty Audio Latent",
       "widgets_values": [
-        512,
-        512,
+        47.6,
         1
       ]
     },
     {
-      "id": 5,
+      "id": 7,
       "type": "KSampler",
       "pos": [
         750,
@@ -260,34 +331,34 @@
         340
       ],
       "flags": {},
-      "order": 4,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 4,
+          "link": 7,
           "label": "model",
           "localized_name": "model"
         },
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 3,
+          "link": 5,
           "label": "positive",
           "localized_name": "positive"
         },
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 5,
+          "link": 6,
           "label": "negative",
           "localized_name": "negative"
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 7,
+          "link": 8,
           "label": "latent_image",
           "localized_name": "latent_image"
         },
@@ -367,7 +438,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            8
+            9
           ],
           "slot_index": 0,
           "label": "LATENT",
@@ -380,16 +451,16 @@
       "widgets_values": [
         0,
         "randomize",
-        20,
+        100,
         7,
-        "euler_ancestral",
-        "karras",
+        "dpmpp_2m",
+        "sgm_uniform",
         1
       ]
     },
     {
-      "id": 6,
-      "type": "VAEDecode",
+      "id": 8,
+      "type": "VAEDecodeAudio",
       "pos": [
         1100,
         0
@@ -399,61 +470,61 @@
         72
       ],
       "flags": {},
-      "order": 5,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 8,
+          "link": 9,
           "label": "samples",
           "localized_name": "samples"
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 6,
+          "link": 10,
           "label": "vae",
           "localized_name": "vae"
         }
       ],
       "outputs": [
         {
-          "name": "IMAGE",
-          "type": "IMAGE",
+          "name": "AUDIO",
+          "type": "AUDIO",
           "links": [
-            9
+            11
           ],
           "slot_index": 0,
-          "label": "IMAGE",
-          "localized_name": "IMAGE"
+          "label": "AUDIO",
+          "localized_name": "AUDIO"
         }
       ],
       "properties": {
-        "Node name for S&R": "VAEDecode"
+        "Node name for S&R": "VAEDecodeAudio"
       }
     },
     {
-      "id": 7,
-      "type": "SaveImage",
+      "id": 9,
+      "type": "SaveAudio",
       "pos": [
         1100,
-        130
+        120
       ],
       "size": [
         320,
-        270
+        150
       ],
       "flags": {},
-      "order": 6,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 9,
-          "label": "images",
-          "localized_name": "images"
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 11,
+          "label": "audio",
+          "localized_name": "audio"
         },
         {
           "label": "filename_prefix",
@@ -468,10 +539,11 @@
       ],
       "outputs": [],
       "properties": {
-        "Node name for S&R": "SaveImage"
+        "Node name for S&R": "SaveAudio"
       },
+      "title": "Save Audio",
       "widgets_values": [
-        "ComfyUI"
+        "audio/ComfyUI_StableAudio"
       ]
     }
   ],
@@ -480,7 +552,7 @@
       1,
       1,
       1,
-      2,
+      3,
       0,
       "CLIP"
     ],
@@ -488,65 +560,81 @@
       2,
       1,
       1,
-      3,
+      4,
       0,
       "CLIP"
     ],
     [
       3,
-      2,
+      3,
+      0,
+      5,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      4,
+      4,
       0,
       5,
       1,
       "CONDITIONING"
     ],
     [
-      4,
+      5,
+      5,
+      0,
+      7,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      6,
+      5,
+      1,
+      7,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      7,
       1,
       0,
-      5,
+      7,
       0,
       "MODEL"
     ],
     [
-      5,
-      3,
-      0,
-      5,
-      2,
-      "CONDITIONING"
-    ],
-    [
-      6,
-      1,
-      2,
-      6,
-      1,
-      "VAE"
-    ],
-    [
-      7,
-      4,
-      0,
-      5,
-      3,
-      "LATENT"
-    ],
-    [
       8,
-      5,
-      0,
       6,
       0,
+      7,
+      3,
       "LATENT"
     ],
     [
       9,
-      6,
-      0,
       7,
       0,
-      "IMAGE"
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      10,
+      1,
+      2,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      11,
+      8,
+      0,
+      9,
+      0,
+      "AUDIO"
     ]
   ],
   "groups": [],
@@ -555,8 +643,8 @@
   "version": 0.4,
   "models": [
     {
-      "name": "v1-5-pruned-emaonly.safetensors",
-      "url": "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors",
+      "name": "stable_audio_open_1.0.safetensors",
+      "url": "https://huggingface.co/stabilityai/stable-audio-open-1.0/resolve/main/model.safetensors",
       "directory": "checkpoints"
     }
   ]
