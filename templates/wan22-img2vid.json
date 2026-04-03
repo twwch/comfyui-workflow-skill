@@ -1,0 +1,116 @@
+{
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "wan2.2_i2v_14b_720p.safetensors",
+      "weight_dtype": "default"
+    },
+    "_meta": { "title": "Load Wan 2.2 I2V Model" }
+  },
+  "2": {
+    "class_type": "DualCLIPLoader",
+    "inputs": {
+      "clip_name1": "umt5_xxl_fp16.safetensors",
+      "clip_name2": "open_clip_vit_h.safetensors",
+      "type": "wan"
+    },
+    "_meta": { "title": "Load CLIP (Wan)" }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "wan_2.2_vae.safetensors"
+    },
+    "_meta": { "title": "Load VAE" }
+  },
+  "4": {
+    "class_type": "CLIPVisionLoader",
+    "inputs": {
+      "clip_name": "clip_vision_h.safetensors"
+    },
+    "_meta": { "title": "Load CLIP Vision" }
+  },
+  "5": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "start_frame.png"
+    },
+    "_meta": { "title": "Load Start Image" }
+  },
+  "6": {
+    "class_type": "CLIPVisionEncode",
+    "inputs": {
+      "clip_vision": ["4", 0],
+      "image": ["5", 0],
+      "crop": "center"
+    },
+    "_meta": { "title": "CLIP Vision Encode" }
+  },
+  "7": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "the scene comes alive with gentle motion, camera slowly pans right, high quality, smooth motion",
+      "clip": ["2", 0]
+    },
+    "_meta": { "title": "Positive Prompt" }
+  },
+  "8": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "worst quality, blurry, distorted, static, watermark, jittery",
+      "clip": ["2", 0]
+    },
+    "_meta": { "title": "Negative Prompt" }
+  },
+  "9": {
+    "class_type": "WanImageToVideo",
+    "inputs": {
+      "positive": ["7", 0],
+      "negative": ["8", 0],
+      "vae": ["3", 0],
+      "width": 832,
+      "height": 480,
+      "length": 81,
+      "batch_size": 1,
+      "clip_vision_output": ["6", 0],
+      "start_image": ["5", 0]
+    },
+    "_meta": { "title": "Wan Image-to-Video Conditioning" }
+  },
+  "10": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["1", 0],
+      "positive": ["9", 0],
+      "negative": ["9", 1],
+      "latent_image": ["9", 2],
+      "seed": 0,
+      "steps": 25,
+      "cfg": 6.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1.0
+    },
+    "_meta": { "title": "KSampler" }
+  },
+  "11": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["10", 0],
+      "vae": ["3", 0]
+    },
+    "_meta": { "title": "VAE Decode" }
+  },
+  "12": {
+    "class_type": "SaveAnimatedWEBP",
+    "inputs": {
+      "images": ["11", 0],
+      "filename_prefix": "ComfyUI_Wan_I2V",
+      "fps": 16.0,
+      "lossless": false,
+      "quality": 85,
+      "method": "default"
+    },
+    "_meta": { "title": "Save Video (WEBP)" }
+  }
+}

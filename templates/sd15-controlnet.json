@@ -1,0 +1,93 @@
+{
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "sd15_model.safetensors"
+    },
+    "_meta": { "title": "Load Checkpoint" }
+  },
+  "2": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "masterpiece, best quality, detailed illustration",
+      "clip": ["1", 1]
+    },
+    "_meta": { "title": "Positive Prompt" }
+  },
+  "3": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "worst quality, low quality, blurry",
+      "clip": ["1", 1]
+    },
+    "_meta": { "title": "Negative Prompt" }
+  },
+  "4": {
+    "class_type": "ControlNetLoader",
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_canny.safetensors"
+    },
+    "_meta": { "title": "Load ControlNet (Canny)" }
+  },
+  "5": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "control_image.png"
+    },
+    "_meta": { "title": "Load Control Image" }
+  },
+  "6": {
+    "class_type": "ControlNetApplyAdvanced",
+    "inputs": {
+      "positive": ["2", 0],
+      "negative": ["3", 0],
+      "control_net": ["4", 0],
+      "image": ["5", 0],
+      "strength": 1.0,
+      "start_percent": 0.0,
+      "end_percent": 1.0
+    },
+    "_meta": { "title": "Apply ControlNet" }
+  },
+  "7": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "batch_size": 1
+    },
+    "_meta": { "title": "Empty Latent" }
+  },
+  "8": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["1", 0],
+      "positive": ["6", 0],
+      "negative": ["6", 1],
+      "latent_image": ["7", 0],
+      "seed": 0,
+      "steps": 20,
+      "cfg": 7.0,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "karras",
+      "denoise": 1.0
+    },
+    "_meta": { "title": "KSampler" }
+  },
+  "9": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["8", 0],
+      "vae": ["1", 2]
+    },
+    "_meta": { "title": "VAE Decode" }
+  },
+  "10": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": ["9", 0],
+      "filename_prefix": "ComfyUI_ControlNet"
+    },
+    "_meta": { "title": "Save Image" }
+  }
+}

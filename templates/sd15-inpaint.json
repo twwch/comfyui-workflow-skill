@@ -1,0 +1,82 @@
+{
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "sd15_inpainting_model.safetensors"
+    },
+    "_meta": { "title": "Load Inpainting Checkpoint" }
+  },
+  "2": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "input_image.png"
+    },
+    "_meta": { "title": "Load Image" }
+  },
+  "3": {
+    "class_type": "LoadImageMask",
+    "inputs": {
+      "image": "mask_image.png",
+      "channel": "alpha"
+    },
+    "_meta": { "title": "Load Mask" }
+  },
+  "4": {
+    "class_type": "VAEEncodeForInpaint",
+    "inputs": {
+      "pixels": ["2", 0],
+      "vae": ["1", 2],
+      "mask": ["3", 0],
+      "grow_mask_by": 6
+    },
+    "_meta": { "title": "VAE Encode (Inpaint)" }
+  },
+  "5": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "masterpiece, best quality, seamless inpainting",
+      "clip": ["1", 1]
+    },
+    "_meta": { "title": "Positive Prompt" }
+  },
+  "6": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "worst quality, low quality, blurry",
+      "clip": ["1", 1]
+    },
+    "_meta": { "title": "Negative Prompt" }
+  },
+  "7": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["1", 0],
+      "positive": ["5", 0],
+      "negative": ["6", 0],
+      "latent_image": ["4", 0],
+      "seed": 0,
+      "steps": 20,
+      "cfg": 7.0,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "karras",
+      "denoise": 1.0
+    },
+    "_meta": { "title": "KSampler" }
+  },
+  "8": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["7", 0],
+      "vae": ["1", 2]
+    },
+    "_meta": { "title": "VAE Decode" }
+  },
+  "9": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": ["8", 0],
+      "filename_prefix": "ComfyUI_Inpaint"
+    },
+    "_meta": { "title": "Save Image" }
+  }
+}
