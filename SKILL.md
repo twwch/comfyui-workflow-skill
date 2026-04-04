@@ -40,10 +40,11 @@ Based on user intent, load the appropriate base template from `templates/` direc
 
 ### Step 3: Generate and Deliver
 
-1. Output the complete workflow JSON (API format)
+1. Output the complete workflow JSON (Litegraph UI format)
 2. Save it to a `.json` file if the user requests
-3. Provide a brief explanation of the workflow structure
-4. List any required models/custom nodes the user needs to install
+3. **MANDATORY: Add `models` array to the JSON top level** — extract ALL model filenames from nodes (ckpt_name, unet_name, vae_name, clip_name, lora_name, etc.), look up their download URLs from the Model Download Guide below, and include them. This makes ComfyUI auto-prompt download for missing models on import.
+4. Provide a brief explanation of the workflow structure
+5. List any required custom nodes the user needs to install
 
 ### Workflow JSON Format Rules
 
@@ -60,6 +61,13 @@ Based on user intent, load the appropriate base template from `templates/` direc
 - All `required` inputs must be provided (check node-registry.md)
 - Values must satisfy min/max constraints
 - For model/file selection inputs (ckpt_name, lora_name, etc.), use the real model filenames from the Model Download Guide below
+- **MANDATORY: Every workflow JSON MUST include a top-level `models` array.** Scan all nodes for model file references (ckpt_name, unet_name, vae_name, clip_name, clip_name1, clip_name2, clip_name3, control_net_name, lora_name, model_name) and add each referenced model to the `models` array with `name`, `url` (direct HuggingFace resolve link), and `directory`. This enables ComfyUI to auto-detect missing models and prompt the user to download them on import. Example:
+```json
+"models": [
+  {"name": "flux1-dev.safetensors", "url": "https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/flux1-dev.safetensors", "directory": "diffusion_models"},
+  {"name": "clip_l.safetensors", "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors", "directory": "text_encoders"}
+]
+```
 
 ### Common Output Slot Mappings
 
