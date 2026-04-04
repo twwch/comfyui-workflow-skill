@@ -11,35 +11,23 @@
 ### 安装 Skill
 ![安装skills](images/安装skills.png)
 
-### 生成的图片
-![生成的图片](images/生成的图片.jpg)
-
-### 图生视频流程
+### AI 生成工作流 → 导入 ComfyUI → 运行出图
+![生图转视频workflow](images/生图转视频workflow.png)
 ![图生视频流程](images/图生视频流程.png)
 
-### 运行结果
+### 生成的图片 & 视频
+![生成的图片](images/生成的图片.jpg)
 ![运行结果](images/运行结果.png)
 
-### 图生视频效果
 https://github.com/user-attachments/assets/831e8453-d3fa-41ad-99f6-39b13ce498d0
-
-
-### 生图转视频 Workflow
-![生图转视频workflow](images/生图转视频workflow.png)
 
 ### 多个 Workflow 合并更新
 ![多个workflow合并更新](images/多个workflow合并更新.png)
 
-### 动作迁移 Workflow
+### 动作迁移
 ![动作迁移workflow](images/动作迁移workflow.png)
-
-### 动作迁移流程
 ![动作迁移流程](images/动作迁移流程.png)
-
-### 动作迁移修复
 ![动作迁移修复](images/动作迁移修复.png)
-
-### 动作迁移音频还原
 ![动作迁移音频还原](images/动作迁移音频还原.png)
 
 ## 这是什么？
@@ -122,29 +110,13 @@ rm -rf ~/.claude/skills/comfyui-workflow
 3. 如果缺少模型，ComfyUI 会自动弹窗提示下载
 4. 点击 **Queue** 运行
 
-## 示例：AI 生成 FLUX 文生图 + Wan2.2 图生视频全流程
+## 示例工作流
 
-[`flux-txt2img-wan22-img2vid.json`](flux-txt2img-wan22-img2vid.json) 是一个完全由 AI 生成的工作流，实现了 **FLUX 文生图 → Wan2.2 图生视频** 的完整流水线。
-
-只需一句话：
+[`flux-txt2img-wan22-img2vid.json`](flux-txt2img-wan22-img2vid.json) — 完全由 AI 生成的 **FLUX 文生图 → Wan2.2 图生视频** 全流程工作流，一句话生成：
 
 ```
 "帮我生成一个 FLUX 文生图 + Wan 2.2 图生视频的工作流"
 ```
-
-AI 自动读取模板、组合节点、生成完整 JSON：
-
-![AI 生成工作流过程](https://cdn.jsdelivr.net/gh/twwch/images/comfyui-workflow-skill/images/2026/04/生图转视频workflow.png)
-
-导入 ComfyUI 后的完整节点图：
-
-![工作流节点图](https://cdn.jsdelivr.net/gh/twwch/images/comfyui-workflow-skill/images/2026/04/图生视频流程.png)
-
-运行结果——FLUX 生成图片，Wan2.2 自动接力生成视频：
-
-![运行结果](https://cdn.jsdelivr.net/gh/twwch/images/comfyui-workflow-skill/images/2026/04/运行结果.png)
-
-https://github.com/user-attachments/assets/831e8453-d3fa-41ad-99f6-39b13ce498d0
 
 ## 可选：安装 LLM 集成
 
@@ -231,24 +203,6 @@ pip install -r comfyui_LLM_party/requirements.txt
 ```
 
 支持 HuggingFace 和 CivitAI 下载源。
-
-## 节点知识库
-
-节点注册表按分类拆分为 42 个文件，按需加载：
-
-```
-references/
-├── nodes/
-│   ├── index.md              # 索引 — 42 个分类目录
-│   ├── 01-loaders.md         # CheckpointLoader, UNETLoader, VAELoader...
-│   ├── 02-conditioning.md    # CLIPTextEncode, CLIPTextEncodeFlux...
-│   ├── 07-video-wan.md       # WanImageToVideo, WanCamera...
-│   ├── 09-flux.md            # FLUX 专用节点
-│   ├── 15-custom-samplers.md # BasicScheduler, KSamplerSelect...
-│   └── ... (42 个分类文件)
-├── workflow-format.md         # JSON 格式规范
-└── common-workflows.md        # 常见工作流模式
-```
 
 ## 项目结构
 
