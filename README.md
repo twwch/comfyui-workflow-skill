@@ -4,7 +4,7 @@
 
 **无需 API 费用，无需后端。描述你想要的 → 生成有效的工作流 JSON → 导入 ComfyUI 运行。**
 
-[![Linux.do](https://img.shields.io/badge/Linux.do-Discussion-blue)](https://linux.do/)
+[![Linux.do](https://img.shields.io/badge/Linux.do-Discussion-blue)](https://linux.do/t/topic/1896794)
 
 ## 效果展示
 
