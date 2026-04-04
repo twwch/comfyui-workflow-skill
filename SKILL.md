@@ -289,6 +289,8 @@ CLIPTextEncode_party(enhanced_prompt) → CONDITIONING → KSampler → image
 | LLM Prompt Enhance | `templates/comfyui_LLM_party/llm-prompt-enhance.json` | LLM enhances prompt → FLUX generates image |
 | LLM Script to Video | `templates/comfyui_LLM_party/llm-script-to-video.json` | LLM script → characters → storyboard pipeline |
 
+**CRITICAL RULE: ComfyUI auto-adds a hidden `control_after_generate` widget after every seed INT that has `control_after_generate: True`. You MUST include `"randomize"` in widgets_values right after every seed value. This applies to KSampler, RandomNoise, and any node with a seed INT.**
+
 ### Quality Checklist
 
 Before delivering a workflow, verify:
@@ -363,6 +365,7 @@ Use this reference table for common models:
 | RealESRGAN_x4plus.pth | models/upscale_models/ | https://huggingface.co/ai-forever/Real-ESRGAN |
 | RealESRGAN_x4plus_anime_6B.pth | models/upscale_models/ | https://huggingface.co/ai-forever/Real-ESRGAN |
 | 4x-UltraSharp.pth | models/upscale_models/ | https://huggingface.co/Kim2091/UltraSharp |
+
 
 #### Output Format Example
 
