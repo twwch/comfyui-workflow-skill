@@ -38,6 +38,8 @@ Based on user intent, load the appropriate base template from `templates/` direc
 3. Add optional modules (ControlNet, LoRA, etc.) by inserting additional nodes and links
 4. Validate the workflow DAG structure
 
+**Fallback — Official Template Repository:** If no matching template is found in the local `templates/` directory, search the ComfyUI official template repository: https://github.com/Comfy-Org/workflow_templates/tree/main/templates . The official repo contains 443 templates across 9 categories (Image / Video / Audio / 3D / LLM / Utility / Use Cases / Getting Started / Node Basics). First read `templates/index.json` to find a matching template name, then download the corresponding JSON file to use as the base template. The official templates use the same format as this project (LiteGraph UI format, version 0.4).
+
 ### Step 3: Generate and Deliver
 
 1. Output the complete workflow JSON (Litegraph UI format)
