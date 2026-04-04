@@ -4,6 +4,8 @@
 
 **无需 API 费用，无需后端。描述你想要的 → 生成有效的工作流 JSON → 导入 ComfyUI 运行。**
 
+[![Linux.do](https://img.shields.io/badge/Linux.do-Discussion-blue)](https://linux.do/)
+
 ## 效果展示
 
 ### 安装 Skill
@@ -120,6 +122,30 @@ rm -rf ~/.claude/skills/comfyui-workflow
 3. 如果缺少模型，ComfyUI 会自动弹窗提示下载
 4. 点击 **Queue** 运行
 
+## 示例：AI 生成 FLUX 文生图 + Wan2.2 图生视频全流程
+
+[`flux-txt2img-wan22-img2vid.json`](flux-txt2img-wan22-img2vid.json) 是一个完全由 AI 生成的工作流，实现了 **FLUX 文生图 → Wan2.2 图生视频** 的完整流水线。
+
+只需一句话：
+
+```
+"帮我生成一个 FLUX 文生图 + Wan 2.2 图生视频的工作流"
+```
+
+AI 自动读取模板、组合节点、生成完整 JSON：
+
+![AI 生成工作流过程](https://cdn.jsdelivr.net/gh/twwch/images/comfyui-workflow-skill/images/2026/04/生图转视频workflow.png)
+
+导入 ComfyUI 后的完整节点图：
+
+![工作流节点图](https://cdn.jsdelivr.net/gh/twwch/images/comfyui-workflow-skill/images/2026/04/图生视频流程.png)
+
+运行结果——FLUX 生成图片，Wan2.2 自动接力生成视频：
+
+![运行结果](https://cdn.jsdelivr.net/gh/twwch/images/comfyui-workflow-skill/images/2026/04/运行结果.png)
+
+https://github.com/user-attachments/assets/831e8453-d3fa-41ad-99f6-39b13ce498d0
+
 ## 可选：安装 LLM 集成
 
 如果需要在工作流中使用 LLM 节点（剧本生成、角色解析、提示词增强等），需要在 ComfyUI 中安装 [comfyui_LLM_party](https://github.com/heshengtao/comfyui_LLM_party)：
@@ -228,19 +254,22 @@ references/
 
 ```
 comfyui-workflow-skill/
-├── SKILL.md                   # Skill 定义（入口文件）
-├── README.md                  # 本文件
+├── SKILL.md                              # Skill 定义（入口文件）
+├── README.md                             # 本文件
+├── flux-txt2img-wan22-img2vid.json       # AI 生成的示例：FLUX 生图 + Wan2.2 图生视频
+├── images/                               # 示例截图和演示视频
+├── wechat-article.md                     # 微信推文
 ├── references/
-│   ├── nodes/                 # 42 个节点分类文件 + 索引
-│   ├── node-registry.md       # 完整节点注册表 (360+)
-│   ├── workflow-format.md     # JSON 格式规范
-│   └── common-workflows.md    # 常见模式
-└── templates/                 # 34 个工作流模板
+│   ├── nodes/                            # 42 个节点分类文件 + 索引
+│   ├── node-registry-additions.md        # 附加节点定义 (音频、3D 等)
+│   ├── workflow-format.md                # JSON 格式规范
+│   └── common-workflows.md               # 常见模式
+└── templates/                            # 34 个工作流模板
     ├── sd15-txt2img.json
     ├── flux-txt2img.json
     ├── wan22-img2vid.json
     ├── ... (30 个核心模板)
-    └── comfyui_LLM_party/     # 4 个 LLM 集成模板
+    └── comfyui_LLM_party/                # 4 个 LLM 集成模板
 ```
 
 ## 常见问题
