@@ -25,6 +25,15 @@ https://github.com/user-attachments/assets/831e8453-d3fa-41ad-99f6-39b13ce498d0
 ![多个workflow合并更新](images/多个workflow合并更新.png)
 
 ### 动作迁移
+
+原视频：
+
+https://github.com/user-attachments/assets/8a0affa3-ff07-449e-9ec5-c6ca8c37ba0f
+
+迁移后（显存限制，按低分辨率跑的）：
+
+https://github.com/user-attachments/assets/5420d74e-18eb-4a72-8819-3138d7353edf
+
 ![动作迁移workflow](images/动作迁移workflow.png)
 ![动作迁移流程](images/动作迁移流程.png)
 ![动作迁移修复](images/动作迁移修复.png)
@@ -112,11 +121,8 @@ rm -rf ~/.claude/skills/comfyui-workflow
 
 ## 示例工作流
 
-[`flux-txt2img-wan22-img2vid.json`](flux-txt2img-wan22-img2vid.json) — 完全由 AI 生成的 **FLUX 文生图 → Wan2.2 图生视频** 全流程工作流，一句话生成：
-
-```
-"帮我生成一个 FLUX 文生图 + Wan 2.2 图生视频的工作流"
-```
+- [`flux-txt2img-wan22-img2vid.json`](flux-txt2img-wan22-img2vid.json) — **FLUX 文生图 → Wan2.2 图生视频** 全流程工作流
+- [`wan22-motion-transfer.json`](wan22-motion-transfer.json) — **Wan2.2 动作迁移** 工作流（参考视频动作 → 生成新视频）
 
 ## 可选：安装 LLM 集成
 
