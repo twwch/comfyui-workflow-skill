@@ -22,7 +22,7 @@
 - **Function**: execute
 # ComfyUI Node Registry - Additions
 
-New nodes extracted from comfy_extras source files, not yet in the main node-registry.md.
+New nodes extracted from comfy_extras source files, not yet in the main node registry under `references/nodes/`.
 
 ---
 

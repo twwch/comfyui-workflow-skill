@@ -60,7 +60,7 @@ Based on user intent, load the appropriate base template from `templates/` direc
 - Links format: `[link_id, source_node_id, source_slot, target_node_id, target_slot, "TYPE"]`
 - `widgets_values` array order must match the widget inputs order
 - Every workflow MUST have at least one output node (SaveImage, PreviewImage, SaveVideo, etc.)
-- All `required` inputs must be provided (check node-registry.md)
+- All `required` inputs must be provided (check `references/nodes/index.md` and the category files under `references/nodes/`, plus `references/node-registry-additions.md`)
 - Values must satisfy min/max constraints
 - For model/file selection inputs (ckpt_name, lora_name, etc.), use the real model filenames from the Model Download Guide below
 - **MANDATORY: Every workflow JSON MUST include a top-level `models` array.** Scan all nodes for model file references (ckpt_name, unet_name, vae_name, clip_name, clip_name1, clip_name2, clip_name3, control_net_name, lora_name, model_name) and add each referenced model to the `models` array with `name`, `url` (direct HuggingFace resolve link), and `directory`. This enables ComfyUI to auto-detect missing models and prompt the user to download them on import. Example:
